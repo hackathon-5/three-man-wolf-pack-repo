@@ -63,7 +63,7 @@ public class MainFragment extends Fragment {
         }
 
         final UserService userService = UserServiceFactory.getInstance();
-
+        
         // get context
         context = inflater.getContext();
         dialog = DialogUtil.getProgressDialog(context, getString(R.string.signing_in));
