@@ -52,6 +52,7 @@ def scan():
     # get all of the bluetooth devices nearby
     ids = get_bt_ids()
     for id in ids:
+        print(id)
         # only record if the device is new
         if not devices_here.has_key(id):
             # if the device is not here, it must have just entered the area.
