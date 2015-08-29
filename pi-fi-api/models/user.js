@@ -15,6 +15,7 @@ var OAuthUsersSchema = new Schema({
   firstname: String,
   lastname: String,
   bluetooth: String,
+  defaultTrack: String,
   tracks: [String]
 });
 

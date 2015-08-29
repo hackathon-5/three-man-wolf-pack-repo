@@ -23,7 +23,7 @@ var UserController = {
     user.email = req.body.email;
     user.password = req.body.password;
     user.password_reset_token = uuid.v1();
-    user.defaultTrack = req.body.defaultTrack;
+    user.defaultTrack = '6NwbeybX6TDtXlpXvnUOZC';
     user.tracks = [];
     user.bluetooth = req.body.bluetooth;
 
@@ -174,7 +174,10 @@ var UserController = {
     }, function(error) {
       return responseUtil.handleInternalError(res, err);
     })
-  }
+  },
+
+
+
 };
 
 module.exports = UserController;
