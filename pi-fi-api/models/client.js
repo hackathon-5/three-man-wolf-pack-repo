@@ -26,7 +26,7 @@ OAuthClientSchema.static('authenticate', function(clientId, secret, cb) {
     if(client) {
       cb(null, bcrypt.compareSync(secret, client.secret) ? client : null);
     } else {
-      throw error;
+      cb("Failed to get client", null);
     }
   }, function(error) {
     return error;
