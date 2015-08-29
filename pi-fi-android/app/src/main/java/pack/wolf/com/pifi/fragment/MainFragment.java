@@ -7,6 +7,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import pack.wolf.com.pifi.R;
 
@@ -41,6 +42,9 @@ public class MainFragment extends Fragment {
         // get context
         context = inflater.getContext();
 
+        // get button, bring to front
+        Button startButton = (Button) rootView.findViewById(R.id.startButton);
+        startButton.bringToFront();
 
         return rootView;
 
