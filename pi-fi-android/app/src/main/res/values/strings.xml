@@ -5,7 +5,7 @@
     <string name="action_search">Search</string>
     <string name="action_logout">Logout</string>
 
-    <string name="home">PiFi</string>
+    <string name="home">Home</string>
     <string name="signin">Sign In</string>
     <string name="signup">Sign Up</string>
     <string name="email">Email address</string>

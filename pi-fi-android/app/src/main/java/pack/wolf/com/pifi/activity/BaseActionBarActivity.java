@@ -21,8 +21,13 @@ import android.widget.TextView;
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.fragment.BaseFragment;
+<<<<<<< HEAD
 import pack.wolf.com.pifi.fragment.SettingsFragment;
+=======
+import pack.wolf.com.pifi.fragment.SearchFragment;
+>>>>>>> 2bbe6d714048e9feae762007cd08fac783179424
 import pack.wolf.com.pifi.service.BluetoothService;
+import pack.wolf.com.pifi.util.DialogUtil;
 
 public class BaseActionBarActivity extends AppCompatActivity {
 
@@ -94,17 +99,12 @@ public class BaseActionBarActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.action_settings:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, SettingsFragment.newInstance())
-                        .addToBackStack(AppConstants.FRAGMENT_SETTINGS)
-                        .commit();
-                break;
             case R.id.action_search:
                 startActivity(new Intent(context, UserSearchActivity.class));
 
                 break;
             case R.id.action_logout:
+                DialogUtil.logoutDialog(context, fragmentManager);
                 break;
 
         }
