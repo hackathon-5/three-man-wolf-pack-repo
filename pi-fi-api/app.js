@@ -8,6 +8,7 @@ var domain = require('domain');
 var config = require('./config');
 var logger = require('./libraries/logger').getLogger('app');
 var hooks = require("./oauth/hooks");
+var path = require("path");
 
 var api = restify.createServer({
   name: config.api.name,
@@ -63,7 +64,7 @@ restifyOAuth2.ropc(api, { tokenEndpoint: '/api/login', hooks: hooks });
 //Iterates through all ./routes files to find matching route
 fs.readdirSync('./routes').forEach(function(curFile) {
   if (curFile.substr(-3) === '.js') {
-    var route = require('./routes/' + curFile);
+    var route = require(path.join(__dirname, 'routes', curFile));
     route.routes(api);
   }
 });

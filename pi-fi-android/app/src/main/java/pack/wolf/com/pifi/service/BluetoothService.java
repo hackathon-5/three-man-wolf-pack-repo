@@ -58,24 +58,6 @@ public class BluetoothService  extends Service {
             }
         };
 
-        AdvertiseSettings settings = new AdvertiseSettings.Builder()
-                .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_BALANCED)
-                .setConnectable(false)
-                .setTimeout(0)
-                .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM)
-                .build();
-
-        AdvertiseData data = new AdvertiseData.Builder()
-                .setIncludeDeviceName(true)
-                .setIncludeTxPowerLevel(true)
-                .addServiceUuid(PIFI)
-
-                .addServiceData(PIFI, buildTempPacket())
-                .build();
-
-
-        mBluetoothLeAdvertiser = mBluetoothAdapter.getBluetoothLeAdvertiser();
-        mBluetoothLeAdvertiser.startAdvertising(settings, data, mAdvertiseCallback);
     }
 
     private byte[] buildTempPacket() {
@@ -136,19 +118,6 @@ public class BluetoothService  extends Service {
     }
 
 
-    private AdvertiseCallback mAdvertiseCallback = new AdvertiseCallback() {
-        @Override
-        public void onStartSuccess(AdvertiseSettings settingsInEffect) {
-            Log.i(AppConstants.LOG_TAG, "LE Advertise Started.");
-        }
-
-        @Override
-        public void onStartFailure(int errorCode) {
-            Log.w(AppConstants.LOG_TAG, "LE Advertise Failed: "+errorCode);
-        }
-    };
-
-
     public static void enableBluetooth(boolean enable){
         BluetoothAdapter bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
@@ -157,11 +126,7 @@ public class BluetoothService  extends Service {
         }
         if (bluetoothAdapter.isEnabled() == enable) {
             Log.e("enableBluetooth", "BT is enabled");
-            if (bluetoothAdapter.isMultipleAdvertisementSupported()) {
-                Log.d("Capability", "Multiple Advertisements supported");
-            } else {
-                Log.d("Capability", "Multiple Advertisements NOT supported!");
-            }
+
             return;
         }
         if (enable) {
@@ -173,64 +138,12 @@ public class BluetoothService  extends Service {
         Log.i("enableBluetooth", "Switched bluetooth to " + enable);
     }
 
-    private void startAdvertising() {
-        ParcelUuid mAdvParcelUUID = ParcelUuid.fromString("0000DEFF-0000-1000-8000-00805F9B34FB");
-
-        mBluetoothLeAdvertiser = (BluetoothLeAdvertiser)((BluetoothAdapter)((BluetoothManager)this.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter()).getBluetoothLeAdvertiser();
-        if (mBluetoothLeAdvertiser == null)
-        {
-            Log.e("startAdvertising", "didn't get a bluetooth le advertiser");
-            return;
-        }
-
-        AdvertiseSettings.Builder mLeAdvSettingsBuilder =
-                new AdvertiseSettings.Builder().setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH);
-        mLeAdvSettingsBuilder.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_POWER);
-        mLeAdvSettingsBuilder.setConnectable(false);
-        AdvertiseData.Builder mLeAdvDataBuilder = new AdvertiseData.Builder();
-
-        List<ParcelUuid> myUUIDs = new ArrayList<ParcelUuid>();
-        myUUIDs.add(ParcelUuid.fromString("0000FE00-0000-1000-8000-00805F9B34FB"));
-        byte mServiceData[] = { (byte)0xff, (byte)0xfe, (byte)0x00, (byte)0x01, (byte)0x02, (byte)0x03, (byte)0x04 };
-        mLeAdvDataBuilder.addServiceData(mAdvParcelUUID, mServiceData);
-
-        AdvertiseSettings.Builder advSetBuilder = new AdvertiseSettings.Builder();
-        advSetBuilder.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY);
-        advSetBuilder.setConnectable(false);
-        advSetBuilder.setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM);
-        advSetBuilder.setTimeout(10000);
-        Log.d("advBuild", "settings:" + advSetBuilder.build());
-
-        AdvertiseData.Builder advDataBuilder = new AdvertiseData.Builder();
-        advDataBuilder.setIncludeDeviceName(false);
-        advDataBuilder.setIncludeTxPowerLevel(true);
-        advDataBuilder.addServiceData(mAdvParcelUUID, mServiceData);
-        mBluetoothLeAdvertiser.startAdvertising(mLeAdvSettingsBuilder.build(), mLeAdvDataBuilder.build(), mLeAdvCallback);
-    }
-
     /**
      * Stop Advertisements
      */
     public void stopAdvertisements() {
         if (mBluetoothLeAdvertiser != null) {
-            mBluetoothLeAdvertiser.stopAdvertising(mLeAdvCallback);
         }
     }
 
-    private final AdvertiseCallback mLeAdvCallback = new AdvertiseCallback() {
-        public void onStartSuccess (AdvertiseSettings settingsInEffect) {
-            Log.d("AdvertiseCallback", "onStartSuccess:" + settingsInEffect);
-        }
-
-        public void onStartFailure(int errorCode) {
-            String description = "";
-            if (errorCode == AdvertiseCallback.ADVERTISE_FAILED_FEATURE_UNSUPPORTED) description = "ADVERTISE_FAILED_FEATURE_UNSUPPORTED";
-            else if (errorCode == AdvertiseCallback.ADVERTISE_FAILED_TOO_MANY_ADVERTISERS) description = "ADVERTISE_FAILED_TOO_MANY_ADVERTISERS";
-            else if (errorCode == AdvertiseCallback.ADVERTISE_FAILED_ALREADY_STARTED) description = "ADVERTISE_FAILED_ALREADY_STARTED";
-            else if (errorCode == AdvertiseCallback.ADVERTISE_FAILED_DATA_TOO_LARGE) description = "ADVERTISE_FAILED_DATA_TOO_LARGE";
-            else if (errorCode == AdvertiseCallback.ADVERTISE_FAILED_INTERNAL_ERROR) description = "ADVERTISE_FAILED_INTERNAL_ERROR";
-            else description = "unknown";
-            Log.e("AdvertiseCB", "onFailure error:" + errorCode + " " + description);
-        }
-    };
 }

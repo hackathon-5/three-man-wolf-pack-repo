@@ -28,7 +28,7 @@ public class AppConstants {
     //env specific stuff
     public static final String BASIC_USER = "rmoore4146+99";
     public static final String BASIC_SECRET = "fractals";
-    public static final String SERVER_PATH = "http://127.0.0.1:9000/";
+    public static final String SERVER_PATH = "http://52.20.116.83:1337/";
 
     //fragment stuff
     public static final String CLASS_PREFIX = "pack.wolf.com.pifi.fragment.";
