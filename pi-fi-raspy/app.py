@@ -50,7 +50,7 @@ class PifiApp:
 
     headers = {'Authorization': 'Bearer '+self.accessToken}
     request = requests.get(self.api + '/user/bluetooth/'+urllib.quote(bluetooth), headers=headers)
-
+    return request.json();
 
   def getTrack(self, track):
 
