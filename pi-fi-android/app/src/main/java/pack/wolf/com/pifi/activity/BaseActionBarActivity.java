@@ -16,6 +16,7 @@ import android.widget.TextView;
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.fragment.BaseFragment;
+import pack.wolf.com.pifi.fragment.SettingsFragment;
 
 public class BaseActionBarActivity extends AppCompatActivity {
 
@@ -77,8 +78,16 @@ public class BaseActionBarActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, SettingsFragment.newInstance())
+                        .addToBackStack(AppConstants.FRAGMENT_SETTINGS)
+                        .commit();
+                break;
+            case R.id.action_logout:
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);

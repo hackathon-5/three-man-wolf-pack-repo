@@ -2,10 +2,16 @@
     <string name="app_name">PiFi</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
 
     <string name="home">PiFi</string>
     <string name="signin">Sign In</string>
     <string name="signup">Sign Up</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="password_confirm">Confirm Password</string>
+    <string name="signing_up">Signing up...</string>
+    <string name="signing_in">Signing in...</string>
     <string name="Track">Track</string>
     <string name="Search">Search</string>
 </resources>
