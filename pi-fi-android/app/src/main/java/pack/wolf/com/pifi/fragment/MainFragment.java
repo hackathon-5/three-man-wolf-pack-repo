@@ -2,6 +2,9 @@ package pack.wolf.com.pifi.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,10 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.InputStream;
 
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
@@ -55,6 +63,7 @@ public class MainFragment extends Fragment {
         }
 
         final UserService userService = UserServiceFactory.getInstance();
+
         // get context
         context = inflater.getContext();
         dialog = DialogUtil.getProgressDialog(context, getString(R.string.signing_in));
@@ -67,7 +76,7 @@ public class MainFragment extends Fragment {
                 userService.saveBlueToothAddress(context, response, new Response.Listener<Object>() {
                     @Override
                     public void onResponse(Object response) {
-                        Log.e("blah","saved bluetooth");
+                        Log.e("blah", "saved bluetooth");
                     }
                 });
 
@@ -75,8 +84,27 @@ public class MainFragment extends Fragment {
                     TrackServiceFactory.getInstance().getTrack(response.getDefaultTrack(), context, new Response.Listener<Track>() {
                         @Override
                         public void onResponse(Track response) {
-                            //populate it now
-                            Log.e("meow",response.getName());
+                            //populate it now, hide dummy text
+                            LinearLayout bottomText = (LinearLayout) rootView.findViewById(R.id.bottomText);
+                            LinearLayout trackDetails = (LinearLayout) rootView.findViewById(R.id.trackDetails);
+                            bottomText.setVisibility(View.GONE);
+                            trackDetails.setVisibility(View.VISIBLE);
+
+                            // change icon
+                            Button edit = (Button) rootView.findViewById(R.id.startButton);
+                            edit.setBackground(getResources().getDrawable(R.drawable.edit));
+
+                            // add track info
+                            ImageView album = (ImageView) rootView.findViewById(R.id.album);
+                            TextView artist = (TextView) rootView.findViewById(R.id.artist);
+                            TextView track = (TextView) rootView.findViewById(R.id.track);
+                            artist.setText(response.getArtists().toString());
+                            track.setText(response.getName().toString());
+
+                            // set background
+                            if (response.getAlbum().getImages().size()>0) {
+                                new DownloadImageTask(album).execute(response.getAlbum().getImages().get(0).getUrl());
+                            }
                         }
                     }, dialog);
                 }
@@ -101,5 +129,38 @@ public class MainFragment extends Fragment {
 
     }
 
+    class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
 
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+            bmImage.setImageBitmap(result);
+        }
+    }
 }
+
+

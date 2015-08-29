@@ -22,11 +22,8 @@ import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.fragment.BaseFragment;
 import pack.wolf.com.pifi.fragment.SearchFragment;
-import pack.wolf.com.pifi.fragment.SettingsFragment;
 import pack.wolf.com.pifi.service.BluetoothService;
-import pack.wolf.com.pifi.service.api.AuthenticationService;
-import pack.wolf.com.pifi.service.impl.AuthenticationServiceImpl;
-import pack.wolf.com.pifi.util.SharedPreferenceUtil;
+import pack.wolf.com.pifi.util.DialogUtil;
 
 public class BaseActionBarActivity extends AppCompatActivity {
 
@@ -105,8 +102,7 @@ public class BaseActionBarActivity extends AppCompatActivity {
                         .commit();
                 break;
             case R.id.action_logout:
-                AuthenticationService authenticationService = new AuthenticationServiceImpl();
-                authenticationService.logout(context,fragmentManager);
+                DialogUtil.logoutDialog(context, fragmentManager);
                 break;
 
         }
