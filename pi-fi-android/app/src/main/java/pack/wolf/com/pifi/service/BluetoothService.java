@@ -4,7 +4,6 @@ import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
-import android.bluetooth.BluetoothSocket;
 import android.bluetooth.le.AdvertiseCallback;
 import android.bluetooth.le.AdvertiseData;
 import android.bluetooth.le.AdvertiseSettings;
@@ -17,7 +16,6 @@ import android.os.ParcelUuid;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -97,35 +95,35 @@ public class BluetoothService  extends Service {
 
     @Override
     public void onCreate() {
-
-        Intent discoverableIntent = new
-                Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-        startActivity(discoverableIntent);
-
-        Toast.makeText(this, "The new Service was Created", Toast.LENGTH_LONG).show();
-        enableBluetooth(true);
 //
-//        mBluetoothAdapter =((BluetoothManager) this.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
-//        if (mBluetoothAdapter == null) Log.e("onCreate", "mBluetoothAdapter is NULL!!!!!");
+//        Intent discoverableIntent = new
+//                Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+//        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+//        startActivity(discoverableIntent);
 //
-//        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-//            Log.d("onCreate", "BLE feature is NOT available");
-//        } else {
-//            Log.d("onCreate", "BLE feature is available");
-//            startAdvertising();
+//        Toast.makeText(this, "The new Service was Created", Toast.LENGTH_LONG).show();
+//        enableBluetooth(true);
+////
+////        mBluetoothAdapter =((BluetoothManager) this.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
+////        if (mBluetoothAdapter == null) Log.e("onCreate", "mBluetoothAdapter is NULL!!!!!");
+////
+////        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+////            Log.d("onCreate", "BLE feature is NOT available");
+////        } else {
+////            Log.d("onCreate", "BLE feature is available");
+////            startAdvertising();
+////        }
+//        // Initializes Bluetooth adapter.
+//        final BluetoothManager bluetoothManager =
+//                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+//        mBluetoothAdapter = bluetoothManager.getAdapter();
+//        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice("48:51:B7:83:61:38");
+//        BluetoothSocket tmp;
+//        try {
+//            tmp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+//        } catch (IOException e) {
+//            Log.e("Blah", "IO EXception creating connection.");
 //        }
-        // Initializes Bluetooth adapter.
-        final BluetoothManager bluetoothManager =
-                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        mBluetoothAdapter = bluetoothManager.getAdapter();
-        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice("48:51:B7:83:61:38");
-        BluetoothSocket tmp;
-        try {
-            tmp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
-        } catch (IOException e) {
-            Log.e("Blah", "IO EXception creating connection.");
-        }
 
     }
 
