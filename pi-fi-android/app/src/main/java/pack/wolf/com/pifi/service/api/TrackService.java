@@ -13,7 +13,9 @@ import pack.wolf.com.pifi.model.UserRequest;
 
 public interface TrackService {
 
-    void getTrack(Context context, Response.Listener<Track> response, Dialog dialog);
+    void getTrack(String track_id, Context context, Response.Listener<Track> response, Dialog dialog);
+
+    void searchTracks(String query, Context context, Response.Listener<Track> response, Dialog dialog);
 
 }
 
