@@ -72,8 +72,12 @@ var UserController = {
     var username = req.params.username;
 
     // Use the User model to find all clients
-    OAuthUsersSchema.find({'userName':username}).then(function(user) {
-      return responseUtil.handleSuccess(res, user);
+    OAuthUsersSchema.findOne({'userName':username}).then(function(user) {
+      if(user) {
+        return responseUtil.handleSuccess(res, user);
+      } else {
+        return responseUtil.handleNotFoundRequest(res, "Failed to retrieve user");
+      }
     }, function() {
       return responseUtil.handleInternalError(res, err);
     })
@@ -88,8 +92,12 @@ var UserController = {
     var bluetooth = req.params.bluetooth;
 
     // Use the User model to find all clients
-    OAuthUsersSchema.find({'bluetooth':bluetooth}).then(function(user) {
-      return responseUtil.handleSuccess(res, user);
+    OAuthUsersSchema.findOne({'bluetooth':bluetooth}).then(function(user) {
+      if(user) {
+        return responseUtil.handleSuccess(res, user);
+      } else {
+        return responseUtil.handleNotFoundRequest(res, "Failed to retrieve user");
+      }
     }, function() {
       return responseUtil.handleInternalError(res, err);
     })
