@@ -31,7 +31,10 @@ public class User implements Serializable {
     private String passwordResetToken;
 
     @SerializedName(value = "tracks")
-    private Track[] tracks;
+    private String[] tracks;
+
+    @SerializedName(value = "defaultTrack")
+    private String defaultTrack;
 
     public String getId() {
         return id;
@@ -89,11 +92,19 @@ public class User implements Serializable {
         this.passwordResetToken = passwordResetToken;
     }
 
-    public Track[] getTracks() {
+    public String[] getTracks() {
         return tracks;
     }
 
-    public void setTracks(Track[] tracks) {
+    public void setTracks(String[] tracks) {
         this.tracks = tracks;
+    }
+
+    public String getDefaultTrack() {
+        return defaultTrack;
+    }
+
+    public void setDefaultTrack(String defaultTrack) {
+        this.defaultTrack = defaultTrack;
     }
 }

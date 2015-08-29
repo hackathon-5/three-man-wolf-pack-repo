@@ -40,8 +40,8 @@ public class SearchFragment extends Fragment {
         } catch (InflateException e) {
         }
 
-        // set title
-        BaseActionBarActivity.setTitle(getString(R.string.search));
+        // hide title bar
+        BaseActionBarActivity.hideTitleBar();
 
         // get context
         context = inflater.getContext();

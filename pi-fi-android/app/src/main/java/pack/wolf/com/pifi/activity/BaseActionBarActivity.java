@@ -1,6 +1,9 @@
 package pack.wolf.com.pifi.activity;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,7 +20,9 @@ import android.widget.TextView;
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.fragment.BaseFragment;
+import pack.wolf.com.pifi.fragment.SearchFragment;
 import pack.wolf.com.pifi.fragment.SettingsFragment;
+import pack.wolf.com.pifi.service.BluetoothService;
 import pack.wolf.com.pifi.service.PairingRequest;
 
 public class BaseActionBarActivity extends AppCompatActivity {
@@ -25,6 +30,7 @@ public class BaseActionBarActivity extends AppCompatActivity {
     private Context context;
     public static FragmentManager fragmentManager;
     public static ActionBar actionBar;
+    public static BluetoothAdapter bluetoothAdapter;
     private Toolbar mToolbar;
     public static TextView mTitle;
 
@@ -73,12 +79,21 @@ public class BaseActionBarActivity extends AppCompatActivity {
          */
         registerReceiver(
                 new PairingRequest(), filter);
+
+        // Initializes Bluetooth adapter.
+        final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        bluetoothAdapter = bluetoothManager.getAdapter();
+        if(bluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE)
+        {
+            this.startService(new Intent(this, BluetoothService.class));
+
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_demo, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -97,6 +112,12 @@ public class BaseActionBarActivity extends AppCompatActivity {
                         .addToBackStack(AppConstants.FRAGMENT_SETTINGS)
                         .commit();
                 break;
+            case R.id.action_search:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, SearchFragment.newInstance())
+                        .addToBackStack(AppConstants.FRAGMENT_SEARCH)
+                        .commit();
+                break;
             case R.id.action_logout:
                 break;
 
@@ -109,9 +130,51 @@ public class BaseActionBarActivity extends AppCompatActivity {
         mTitle.setText(title);
     }
 
+    public static void showTitleBar() {
+        actionBar.show();
+    }
+
+    public static void hideTitleBar() {
+        actionBar.hide();
+    }
+
     public void setBackButtonVisibility(Boolean visibility) {
 
         actionBar.setDisplayHomeAsUpEnabled(visibility);
+
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        showTitleBar();
+
+        FragmentManager fm = this.getSupportFragmentManager();
+        if (fm.getBackStackEntryCount() > 1) {
+
+            String fragName = String.valueOf(fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName());
+            switch (fragName) {
+                case AppConstants.FRAGMENT_BASE:
+                    mTitle.setText(getString(R.string.home));
+                    break;
+                case AppConstants.FRAGMENT_SEARCH:
+                    mTitle.setText(getString(R.string.search));
+                    break;
+                case AppConstants.FRAGMENT_SIGNIN:
+                    mTitle.setText(getString(R.string.signin));
+                    break;
+                case AppConstants.FRAGMENT_SIGNUP:
+                    mTitle.setText(getString(R.string.signup));
+                    break;
+                case AppConstants.FRAGMENT_SETTINGS:
+                    mTitle.setText(getString(R.string.action_settings));
+                    break;
+            }
+            fm.popBackStack();
+        } else {
+            finish();
+        }
+
     }
 
     public static class FragmentOnClickListener implements View.OnClickListener
