@@ -28,7 +28,7 @@ public class AppConstants {
     public static final String AUTHORIZATION = "Authorization";
 
     //env specific stuff
-    public static final String BASIC_USER = "kckolz@gmail.com";
+    public static final String BASIC_USER = "kckolz";
     public static final String BASIC_SECRET = "password";
     public static final String SERVER_PATH = "http://52.20.116.83:1337/api/";
 
