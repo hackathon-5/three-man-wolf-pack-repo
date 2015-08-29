@@ -1,10 +1,10 @@
 package pack.wolf.com.pifi.model;
 
-import com.google.gson.annotations.SerializedName;
-
+/**
+ * Created by ryanmoore on 8/28/15.
+ */
 public class ErrorResponse {
 
-    @SerializedName(value = "errorMessage")
     private String errorMessage;
 
     public String getErrorMessage() {

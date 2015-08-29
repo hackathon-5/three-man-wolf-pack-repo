@@ -5,8 +5,6 @@ import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 
-import java.util.Calendar;
-
 import pack.wolf.com.pifi.PifiApplication;
 import pack.wolf.com.pifi.model.AccessToken;
 
@@ -41,11 +39,6 @@ public class SharedPreferenceUtil {
 
     public static void saveAccessToken(AccessToken accessToken) {
 
-        if (accessToken != null) {
-            Calendar expireDate= Calendar.getInstance();
-            expireDate.setTimeInMillis(System.currentTimeMillis() + accessToken.getExpiresIn() - 1000); //make it a second before actual refresh needed
-            accessToken.setExpirationDate(expireDate.getTime());
-        }
         Gson gson = new Gson ();
         String json = gson.toJson (accessToken);
         SharedPreferences.Editor editor = sharedPreferences.edit ();

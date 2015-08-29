@@ -6,17 +6,39 @@ import java.io.Serializable;
 
 public class UserRequest implements Serializable {
 
+    @SerializedName(value = "id")
+    private Long id;
+
     @SerializedName(value = "firstName")
     private String firstName;
 
     @SerializedName(value = "lastName")
     private String lastName;
 
-    @SerializedName(value = "emailAddress")
+    @SerializedName(value = "email")
     private String emailAddress;
 
-    @SerializedName(value = "password")
+    @SerializedName(value = "admin")
+    private Boolean admin;
+
+    @SerializedName(value="password")
     private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -42,11 +64,11 @@ public class UserRequest implements Serializable {
         this.emailAddress = emailAddress;
     }
 
-    public String getPassword() {
-        return password;
+    public Boolean getAdmin() {
+        return admin;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 }

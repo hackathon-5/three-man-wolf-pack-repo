@@ -2,6 +2,7 @@ package pack.wolf.com.pifi.service.impl;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Base64;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -30,8 +31,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void login(final String userName, final String password, final Context context,
                       final Response.Listener<AccessToken> response, final Dialog dialog) {
 
+        // make basic token first.
+        String credentials = AppConstants.BASIC_USER + ":" + AppConstants.BASIC_SECRET;
+        String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+
         Map<String, String> headers = new HashMap<>();
-        headers.put("Grant-Type", "password");
+        headers.put(AppConstants.AUTHORIZATION, AppConstants.BASIC_PREFIX + base64EncodedCredentials);
 
         Map<String, String> params = new HashMap<>();
         params.put(AppConstants.REQUEST_PARAM_GRANT, AppConstants.REQUEST_VALUE_PASSWORD);

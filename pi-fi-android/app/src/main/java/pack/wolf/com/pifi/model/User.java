@@ -3,43 +3,29 @@ package pack.wolf.com.pifi.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ryanmoore on 3/2/15.
  */
 public class User implements Serializable {
 
-    @SerializedName(value = "id")
+    @SerializedName(value = "_id")
     private Long id;
 
-    @SerializedName(value = "firstName")
+    @SerializedName(value = "firstname")
     private String firstName;
 
-    @SerializedName(value = "lastName")
+    @SerializedName(value = "lastname")
     private String lastName;
 
-    @SerializedName(value = "emailAddress")
+    @SerializedName(value = "email")
     private String emailAddress;
 
-    @SerializedName(value = "username")
-    private String username;
+    @SerializedName(value = "admin")
+    private Boolean admin;
 
-    @SerializedName(value = "phoneNumber")
-    private String phoneNumber;
-
-    @SerializedName(value = "emailNotifications")
-    private Boolean emailNotifications;
-
-    @SerializedName(value = "textNotifications")
-    private Boolean textNotifications;
-
-    @SerializedName(value = "pushNotifications")
-    private Boolean pushNotifications;
-
-    @SerializedName(value = "profilePicUrl")
-    private String profilePicUrl;
+    @SerializedName(value = "password_reset_token")
+    private String passwordResetToken;
 
     public Long getId() {
         return id;
@@ -73,51 +59,19 @@ public class User implements Serializable {
         this.emailAddress = emailAddress;
     }
 
-    public String getUsername() {
-        return username;
+    public Boolean getAdmin() {
+        return admin;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPasswordResetToken() {
+        return passwordResetToken;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Boolean getEmailNotifications() {
-        return emailNotifications;
-    }
-
-    public void setEmailNotifications(Boolean emailNotifications) {
-        this.emailNotifications = emailNotifications;
-    }
-
-    public Boolean getTextNotifications() {
-        return textNotifications;
-    }
-
-    public void setTextNotifications(Boolean textNotifications) {
-        this.textNotifications = textNotifications;
-    }
-
-    public Boolean getPushNotifications() {
-        return pushNotifications;
-    }
-
-    public void setPushNotifications(Boolean pushNotifications) {
-        this.pushNotifications = pushNotifications;
-    }
-
-    public String getProfilePicUrl() {
-        return profilePicUrl;
-    }
-
-    public void setProfilePicUrl(String profilePicUrl) {
-        this.profilePicUrl = profilePicUrl;
+    public void setPasswordResetToken(String passwordResetToken) {
+        this.passwordResetToken = passwordResetToken;
     }
 }

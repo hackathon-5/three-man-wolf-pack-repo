@@ -3,31 +3,14 @@ package pack.wolf.com.pifi.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class AccessToken implements Serializable {
 
     @SerializedName(value = "access_token")
     private String accessToken;
 
-    @SerializedName(value = "refresh_token")
-    private String refreshToken;
-
-    @SerializedName(value = "expires_in")
-    private Long expiresIn;
-
     @SerializedName(value = "token_type")
-    private String refreshBy;
-
-    private Date expirationDate;
-
-    public Date getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
+    private String tokenType;
 
     public String getAccessToken() {
         return accessToken;
@@ -37,27 +20,11 @@ public class AccessToken implements Serializable {
         this.accessToken = accessToken;
     }
 
-    public String getRefreshToken() {
-        return refreshToken;
+    public String getTokenType() {
+        return tokenType;
     }
 
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
-
-    public Long getExpiresIn() {
-        return expiresIn;
-    }
-
-    public void setExpiresIn(Long expiresIn) {
-        this.expiresIn = expiresIn;
-    }
-
-    public String getRefreshBy() {
-        return refreshBy;
-    }
-
-    public void setRefreshBy(String refreshBy) {
-        this.refreshBy = refreshBy;
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
     }
 }
