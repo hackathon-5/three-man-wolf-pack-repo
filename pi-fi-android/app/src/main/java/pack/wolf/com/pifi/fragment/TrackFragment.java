@@ -12,10 +12,7 @@ import android.view.ViewGroup;
 import com.android.volley.Response;
 
 import pack.wolf.com.pifi.R;
-import pack.wolf.com.pifi.activity.BaseActionBarActivity;
-import pack.wolf.com.pifi.service.api.AuthenticationService;
 import pack.wolf.com.pifi.service.api.TrackService;
-import pack.wolf.com.pifi.service.impl.AuthenticationServiceImpl;
 import pack.wolf.com.pifi.service.impl.TrackServiceImpl;
 import pack.wolf.com.pifi.util.DialogUtil;
 
@@ -59,7 +56,7 @@ public class TrackFragment extends Fragment {
         // get track info
         ProgressDialog dialog = DialogUtil.getProgressDialog(context, getString(R.string.track_info));
         TrackService trackService = new TrackServiceImpl();
-        trackService.getTrack(context,new GetTrackListener(context),dialog);
+//        trackService.getTrack(context,new GetTrackListener(context),dialog);
 
         // get context
         context = inflater.getContext();

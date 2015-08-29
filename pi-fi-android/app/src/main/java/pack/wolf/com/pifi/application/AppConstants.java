@@ -41,6 +41,7 @@ public class AppConstants {
     public static final String FRAGMENT_SEARCH = "SearchFragment";
     public static final String FRAGMENT_TRACK = "TrackFragment";
     public static final String FRAGMENT_SETTINGS = "SettingsFragment";
+    public static final String FRAGMENT_MAIN = "MainFragment";
 
 
 }
