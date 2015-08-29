@@ -98,12 +98,6 @@ public class BaseActionBarActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.action_settings:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, SettingsFragment.newInstance())
-                        .addToBackStack(AppConstants.FRAGMENT_SETTINGS)
-                        .commit();
-                break;
             case R.id.action_search:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, SearchFragment.newInstance())
