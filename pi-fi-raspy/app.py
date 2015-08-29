@@ -42,7 +42,7 @@ class PifiApp:
 
     headers = {'Authorization': 'Bearer '+self.accessToken}
 
-    request = requests.get(self.api + '/api/spotify/login', headers=headers)
+    request = requests.get(self.api + '/spotify/login', headers=headers)
 
   def getUserByBluetooth(self, bluetooth):
 
