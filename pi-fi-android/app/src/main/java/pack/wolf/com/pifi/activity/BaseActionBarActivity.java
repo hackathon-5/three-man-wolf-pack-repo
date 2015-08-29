@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,7 +22,6 @@ import pack.wolf.com.pifi.fragment.BaseFragment;
 import pack.wolf.com.pifi.fragment.SearchFragment;
 import pack.wolf.com.pifi.fragment.SettingsFragment;
 import pack.wolf.com.pifi.service.BluetoothService;
-import pack.wolf.com.pifi.service.PairingRequest;
 
 public class BaseActionBarActivity extends AppCompatActivity {
 
@@ -68,17 +66,6 @@ public class BaseActionBarActivity extends AppCompatActivity {
                 .replace(R.id.container, BaseFragment.newInstance())
                 .addToBackStack(AppConstants.FRAGMENT_BASE)
                 .commit();
-
-        IntentFilter filter = new IntentFilter(
-                "android.bluetooth.device.action.PAIRING_REQUEST");
-
-
-        /*
-         * Registering a new BTBroadcast receiver from the Main Activity context
-         * with pairing request event
-         */
-        registerReceiver(
-                new PairingRequest(), filter);
 
         // Initializes Bluetooth adapter.
         final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);

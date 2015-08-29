@@ -26,11 +26,11 @@ public class AppConstants {
     public static final String REQUEST_VALUE_REFRESH = "refresh_token";
 
     public static final String BASIC_PREFIX = "Basic ";
-    public static final String AUTHORIZATION = "Authorization ";
+    public static final String AUTHORIZATION = "Authorization";
 
     //env specific stuff
-    public static final String BASIC_USER = "rmoore4146+99";
-    public static final String BASIC_SECRET = "fractals";
+    public static final String BASIC_USER = "kckolz";
+    public static final String BASIC_SECRET = "password";
     public static final String SERVER_PATH = "http://52.20.116.83:1337/api/";
 
     //fragment stuff
@@ -41,6 +41,7 @@ public class AppConstants {
     public static final String FRAGMENT_SEARCH = "SearchFragment";
     public static final String FRAGMENT_TRACK = "TrackFragment";
     public static final String FRAGMENT_SETTINGS = "SettingsFragment";
+    public static final String FRAGMENT_MAIN = "MainFragment";
 
 
 }

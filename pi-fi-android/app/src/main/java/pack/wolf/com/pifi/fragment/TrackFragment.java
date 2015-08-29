@@ -59,7 +59,7 @@ public class TrackFragment extends Fragment {
         // get track info
         ProgressDialog dialog = DialogUtil.getProgressDialog(context, getString(R.string.track_info));
         TrackService trackService = new TrackServiceImpl();
-        trackService.getTrack(context,new GetTrackListener(context),dialog);
+        //trackService.getTrack(context,new GetTrackListener(context),dialog);
 
         // get context
         context = inflater.getContext();

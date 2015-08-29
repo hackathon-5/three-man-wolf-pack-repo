@@ -15,6 +15,7 @@ import pack.wolf.com.pifi.model.User;
 public class SharedPreferenceUtil {
 
     private static final String ACCESS_TOKEN = "accessToken";
+    private static final String LOGGED_IN = "loggedIn";
 
     private static SharedPreferences sharedPreferences;
     private static SharedPreferenceUtil instance = null;
@@ -29,6 +30,16 @@ public class SharedPreferenceUtil {
         }
 
         return instance;
+    }
+
+    public static boolean isLoggedIn() {
+        return sharedPreferences.getBoolean(LOGGED_IN, false);
+    }
+
+    public static void setLoggedIn(boolean loggedIn) {
+        SharedPreferences.Editor editor = sharedPreferences.edit ();
+        editor.putBoolean(LOGGED_IN, loggedIn);
+        editor.commit();
     }
 
     public static AccessToken getAccessToken() {

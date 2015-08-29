@@ -7,8 +7,10 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import pack.wolf.com.pifi.R;
+import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 
 public class MainFragment extends Fragment {
 
@@ -38,9 +40,16 @@ public class MainFragment extends Fragment {
         } catch (InflateException e) {
         }
 
+        // set title
+        BaseActionBarActivity.setTitle(getString(R.string.home));
+
         // get context
         context = inflater.getContext();
 
+        // get button, bring to front
+        Button startButton = (Button) rootView.findViewById(R.id.startButton);
+        startButton.bringToFront();
+        startButton.setOnClickListener(new BaseActionBarActivity.FragmentOnClickListener(getString(R.string.search),SearchFragment.newInstance()));
 
         return rootView;
 
