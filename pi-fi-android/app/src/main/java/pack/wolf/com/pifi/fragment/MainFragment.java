@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import pack.wolf.com.pifi.R;
+import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 
 public class MainFragment extends Fragment {
 
@@ -39,6 +40,9 @@ public class MainFragment extends Fragment {
         } catch (InflateException e) {
         }
 
+        // set title
+        BaseActionBarActivity.setTitle(getString(R.string.home));
+        
         // get context
         context = inflater.getContext();
 
