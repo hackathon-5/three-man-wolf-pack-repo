@@ -14,6 +14,7 @@ class PifiApp:
     self.accessToken = 'bleh'
     self.api = 'http://52.20.116.83:1337/api'
     self.proximity =-53
+    self.playing = false
 
 
   def determineSong(self, addrRssiTuple):
@@ -59,10 +60,11 @@ class PifiApp:
     return request.json()['preview_url']
 
   def playTrack(self, trackUrl):  
-
+    self.playing = true;
     urllib.urlretrieve(trackUrl, "song.mp3")
     player = subprocess.Popen(["omxplayer",'song.mp3'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
+    player.wait()
+    self.playing = false;
     # player.stdin.write("q")
 
 	
