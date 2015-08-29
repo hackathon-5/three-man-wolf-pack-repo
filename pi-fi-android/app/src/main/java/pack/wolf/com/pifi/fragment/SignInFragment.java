@@ -30,6 +30,8 @@ public class SignInFragment extends Fragment {
     private static final int REQUEST_ENABLE_BT = 2;
     private static final int REQUEST_ENABLE_DSC = 3;
 
+     ProgressDialog dialog;
+
     private static View rootView;
     private Context context;
 
@@ -62,6 +64,7 @@ public class SignInFragment extends Fragment {
         // get context
         context = inflater.getContext();
 
+        dialog = DialogUtil.getProgressDialog(context,getString(R.string.signing_in));
         Log.e("blah", "\n\n" + BluetoothUtil.getBlueToothAddress(getActivity()) + "\n\n");
 
         // get user creds
@@ -69,7 +72,6 @@ public class SignInFragment extends Fragment {
         final EditText password_box = (EditText) rootView.findViewById(R.id.password);
 
         // sign in
-        final ProgressDialog dialog = DialogUtil.getProgressDialog(context,getString(R.string.signing_in));
         Button button_signin = (Button) rootView.findViewById(R.id.signin_button);
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +93,8 @@ public class SignInFragment extends Fragment {
     }
 
     protected void navToMain() {
+        dialog.dismiss();
+
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, MainFragment.newInstance())
                 .addToBackStack(AppConstants.FRAGMENT_MAIN
@@ -109,6 +113,7 @@ public class SignInFragment extends Fragment {
 
         @Override
         public void onResponse(Object response) {
+            dialog.dismiss();
             navToMain();
         }
 
