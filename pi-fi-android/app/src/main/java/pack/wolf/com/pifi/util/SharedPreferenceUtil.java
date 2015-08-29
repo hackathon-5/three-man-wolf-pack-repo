@@ -49,6 +49,13 @@ public class SharedPreferenceUtil {
         return gson.fromJson(json, AccessToken.class);
     }
 
+    public static User getUser() {
+
+        Gson gson = new Gson ();
+        String json = sharedPreferences.getString ("user", null);
+        return gson.fromJson(json, User.class);
+    }
+
     public static void saveAccessToken(AccessToken accessToken) {
 
         Gson gson = new Gson ();
@@ -59,6 +66,10 @@ public class SharedPreferenceUtil {
     }
 
     public static void saveUser(User user) {
-
+        Gson gson = new Gson ();
+        String json = gson.toJson(user);
+        SharedPreferences.Editor editor = sharedPreferences.edit ();
+        editor.putString("user", json);
+        editor.commit();
     }
 }

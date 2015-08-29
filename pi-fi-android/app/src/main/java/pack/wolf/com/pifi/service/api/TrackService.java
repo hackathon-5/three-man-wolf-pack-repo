@@ -5,8 +5,6 @@ import android.content.Context;
 
 import com.android.volley.Response;
 
-import java.io.ByteArrayOutputStream;
-
 import pack.wolf.com.pifi.model.SearchType;
 import pack.wolf.com.pifi.model.Track;
 

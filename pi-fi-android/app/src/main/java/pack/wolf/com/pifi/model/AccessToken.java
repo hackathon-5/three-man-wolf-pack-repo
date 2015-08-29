@@ -12,8 +12,19 @@ public class AccessToken implements Serializable {
     @SerializedName(value = "token_type")
     private String tokenType;
 
+    @SerializedName(value = "userId")
+    private String userId;
+
     public String getAccessToken() {
         return accessToken;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setAccessToken(String accessToken) {

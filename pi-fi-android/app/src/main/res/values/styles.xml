@@ -11,6 +11,13 @@
         <item name="android:background">@color/dark_gray</item>
     </style>
 
+    <style name="layout_signinup">
+        <item name="android:paddingTop">70dp</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingRight">30dp</item>
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+
     <style name="button_signin">
         <item name="android:background">@drawable/button_states</item>
         <item name="android:textSize">14dp</item>
@@ -26,7 +33,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:padding">15dp</item>
+        <item name="android:paddingBottom">55dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
     </style>
@@ -47,8 +54,10 @@
         <item name="android:textSize">14dp</item>
         <item name="android:text">@string/signup</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:padding">6dp</item>
-        <item name="android:layout_margin">6dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
     </style>
 
     <style name="button_signin_submit">
@@ -58,8 +67,10 @@
         <item name="android:textSize">14dp</item>
         <item name="android:text">@string/signin</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:padding">6dp</item>
-        <item name="android:layout_margin">6dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
     </style>
 
     <style name="edittext_email">
@@ -68,8 +79,10 @@
         <item name="android:hint">@string/email</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">6dp</item>
-        <item name="android:layout_margin">6dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -80,11 +93,13 @@
         <item name="android:password">true</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">6dp</item>
-        <item name="android:layout_margin">6dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
         <item name="android:textColor">@color/black</item>
     </style>
-
 
     <style name="start_search_header">
         <item name="android:layout_width">match_parent</item>

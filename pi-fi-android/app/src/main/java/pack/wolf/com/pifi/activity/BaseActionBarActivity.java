@@ -1,5 +1,6 @@
 package pack.wolf.com.pifi.activity;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
@@ -14,14 +15,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.fragment.BaseFragment;
 import pack.wolf.com.pifi.fragment.SearchFragment;
-import pack.wolf.com.pifi.fragment.SettingsFragment;
 import pack.wolf.com.pifi.service.BluetoothService;
+import pack.wolf.com.pifi.util.DialogUtil;
 
 public class BaseActionBarActivity extends AppCompatActivity {
 
@@ -93,12 +95,6 @@ public class BaseActionBarActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.action_settings:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, SettingsFragment.newInstance())
-                        .addToBackStack(AppConstants.FRAGMENT_SETTINGS)
-                        .commit();
-                break;
             case R.id.action_search:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, SearchFragment.newInstance())
@@ -106,6 +102,7 @@ public class BaseActionBarActivity extends AppCompatActivity {
                         .commit();
                 break;
             case R.id.action_logout:
+                DialogUtil.logoutDialog(context, fragmentManager);
                 break;
 
         }
@@ -184,5 +181,10 @@ public class BaseActionBarActivity extends AppCompatActivity {
                     .commit();
         }
 
+    }
+
+    public static void hideKeyboard(Context context, View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
