@@ -17,7 +17,7 @@ class PifiApp:
     self.api = 'http://52.20.116.83:1337/api'
     self.proximity =-53
     self.playing = False
-    self.queue = Queue()
+    self.queue = Queue.Queue()
 
   def postDeviceWorker(self):
     while True:
