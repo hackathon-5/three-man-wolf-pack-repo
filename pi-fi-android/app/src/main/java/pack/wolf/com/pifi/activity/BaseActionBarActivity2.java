@@ -49,7 +49,7 @@ public class BaseActionBarActivity2 extends ActionBarActivity {
 
         // get context
         this.context = this;
-        getActionBar().show();
+        getSupportActionBar().show();
         // Initializes Bluetooth adapter.
         final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bluetoothAdapter = bluetoothManager.getAdapter();
