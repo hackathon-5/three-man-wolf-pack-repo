@@ -3,10 +3,12 @@ package pack.wolf.com.pifi.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
@@ -42,6 +44,10 @@ public class SearchFragment extends Fragment {
 
         // hide title bar
         BaseActionBarActivity.hideTitleBar();
+
+        // color search view
+        SearchView searchView = (SearchView) rootView.findViewById(R.id.search_view);
+        searchView.setBackgroundColor(getResources().getColor(R.color.light_green));
 
         // get context
         context = inflater.getContext();

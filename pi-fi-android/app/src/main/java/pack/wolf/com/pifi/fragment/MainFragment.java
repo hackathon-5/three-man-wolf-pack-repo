@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
+import pack.wolf.com.pifi.util.SharedPreferenceUtil;
 
 public class MainFragment extends Fragment {
 
