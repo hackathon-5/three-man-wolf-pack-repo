@@ -73,7 +73,7 @@ public class MainFragment extends Fragment {
         startButton.bringToFront();
         startButton.setOnClickListener(new BaseActionBarActivity.FragmentOnClickListener(getString(R.string.search),SearchFragment.newInstance()));
 
-        
+
         return rootView;
 
 

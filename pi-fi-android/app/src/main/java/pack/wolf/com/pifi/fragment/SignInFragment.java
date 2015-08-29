@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 import pack.wolf.com.pifi.application.AppConstants;
+import pack.wolf.com.pifi.model.AccessToken;
 import pack.wolf.com.pifi.service.BluetoothService;
 import pack.wolf.com.pifi.service.api.AuthenticationService;
 import pack.wolf.com.pifi.service.impl.AuthenticationServiceImpl;
@@ -27,9 +28,6 @@ import pack.wolf.com.pifi.util.SharedPreferenceUtil;
 
 public class SignInFragment extends Fragment {
 
-    private static final int REQUEST_CONNECT_DEVICE = 1;
-    private static final int REQUEST_ENABLE_BT = 2;
-    private static final int REQUEST_ENABLE_DSC = 3;
 
      ProgressDialog dialog;
 
@@ -105,7 +103,7 @@ public class SignInFragment extends Fragment {
     }
 
     // sign in response listener
-    private class SignInListener implements Response.Listener {
+    private class SignInListener implements Response.Listener<AccessToken> {
 
         Context context;
 
@@ -114,13 +112,13 @@ public class SignInFragment extends Fragment {
         }
 
         @Override
-        public void onResponse(Object response) {
+        public void onResponse(AccessToken response) {
             dialog.dismiss();
+            SharedPreferenceUtil.saveAccessToken(response);
             SharedPreferenceUtil.setLoggedIn(true);
             BaseActionBarActivity.hideKeyboard(context,rootView.findViewById(R.id.signin_button));
             navToMain();
         }
-
     }
 
 
