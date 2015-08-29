@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,7 +24,7 @@ import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.service.BluetoothService;
 
-public class BaseActionBarActivity2 extends ActionBarActivity {
+public class BaseActionBarActivity2 extends AppCompatActivity {
 
     private Context context;
     public static FragmentManager fragmentManager;
@@ -49,7 +50,8 @@ public class BaseActionBarActivity2 extends ActionBarActivity {
 
         // get context
         this.context = this;
-        getSupportActionBar().show();
+        actionBar = getSupportActionBar();
+        actionBar.show();
         // Initializes Bluetooth adapter.
         final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bluetoothAdapter = bluetoothManager.getAdapter();
