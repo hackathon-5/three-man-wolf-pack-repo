@@ -47,7 +47,7 @@ OAuthUsersSchema.static('saveTrack', function(id, track) {
   var dfd = Q.defer();
   var model = this;
   model.update({_id:id},
-    {'$set':  {'tracks.$.name': track}}, null,
+    {$push: { 'tracks' : track }}, {upsert:true},
     function(err, user){
       if (err) {
         dfd.reject(err);
