@@ -1,6 +1,10 @@
 # app.py - Main application file. App is init and run from here.
 
 import requests
+import subprocess
+import urllib
+
+
 
 # class for the app so we can holder some instance data, methods
 class PifiApp:
@@ -18,16 +22,22 @@ class PifiApp:
     self.accessToken = request.json()['access_token']
 
     headers = {'Authorization': 'Bearer '+self.accessToken}
+
     request = requests.get(self.api + '/api/spotify/login', headers=headers)
 
 
+  def getTrack(self, track):
 
-  def getTrack(self):
-    print(self.accessToken)
     headers = {'Authorization': 'Bearer '+self.accessToken}
-    request = requests.get(self.api + '/spotify/getTrack/2daZovie6pc2ZK7StayD1K', headers=headers)
-    print(request.json())
+    request = requests.get(self.api + '/spotify/getTrack/'+track, headers=headers)
+    return request.json()['preview_url']
 
+  def playTrack(self, trackUrl):  
+    testfile = urllib.URLopener()
+    testfile.retrieve(trackUrl, "song.mp3")
 
+    player = subprocess.Popen(["mplayer", "song.mp3", "-ss", "30"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    # player.stdin.write("q")
 
 	
