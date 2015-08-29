@@ -5,9 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.crashlytics.android.Crashlytics;
-
-import io.fabric.sdk.android.Fabric;
 import pack.wolf.com.pifi.network.VolleyManager;
 import pack.wolf.com.pifi.util.SharedPreferenceUtil;
 
@@ -18,8 +15,6 @@ public class PifiApplication extends Application {
 
     public void onCreate(){
         super.onCreate();
-
-        Fabric.with(this, new Crashlytics());
 
         application = this;
 
