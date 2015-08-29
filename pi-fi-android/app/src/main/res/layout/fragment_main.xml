@@ -10,23 +10,24 @@
         android:layout_width="255dp"
         android:layout_height="255dp"
         android:layout_marginTop="50dp"
-
         android:layout_centerHorizontal="true">
 
         <Button
             android:id="@+id/startButton"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/add"
+            />
+        <ImageView
             android:layout_width="255dp"
             android:layout_height="255dp"
             android:background="@drawable/icon"
             android:layout_centerInParent="true"/>
-        <TextView
-            android:layout_width="255dp"
-            android:layout_height="255dp"
-            android:gravity="center"
-            android:text="+"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_centerInParent="true"/>
+
     </RelativeLayout>
 
 

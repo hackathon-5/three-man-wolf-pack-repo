@@ -42,6 +42,23 @@ var UserController = {
     })
   },
 
+  me: function(req, res) {
+    if (!req.username) {
+      return res.sendUnauthenticated();
+    }
+
+    OAuthUsersSchema.findOne({'email': req.username}).then(function(user) {
+      if(user) {
+        return responseUtil.handleSuccess(res, user);
+      } else {
+        return responseUtil.handleNotFoundRequest(res, "User Not Found");
+      }
+    }, function(error) {
+      return responseUtil.handleInternalError(res, error);
+    })
+
+  },
+
   getUserById: function(req, res) {
 
     if (!req.username) {

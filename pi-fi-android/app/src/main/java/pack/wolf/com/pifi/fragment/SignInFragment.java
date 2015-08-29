@@ -23,6 +23,7 @@ import pack.wolf.com.pifi.service.api.AuthenticationService;
 import pack.wolf.com.pifi.service.impl.AuthenticationServiceImpl;
 import pack.wolf.com.pifi.util.BluetoothUtil;
 import pack.wolf.com.pifi.util.DialogUtil;
+import pack.wolf.com.pifi.util.SharedPreferenceUtil;
 
 public class SignInFragment extends Fragment {
 
@@ -100,6 +101,7 @@ public class SignInFragment extends Fragment {
                 .addToBackStack(AppConstants.FRAGMENT_MAIN
                 )
                 .commit();
+
     }
 
     // sign in response listener
@@ -114,6 +116,7 @@ public class SignInFragment extends Fragment {
         @Override
         public void onResponse(Object response) {
             dialog.dismiss();
+            SharedPreferenceUtil.setLoggedIn(true);
             navToMain();
         }
 
