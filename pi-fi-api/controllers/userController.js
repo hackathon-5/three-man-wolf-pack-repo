@@ -175,9 +175,6 @@ var UserController = {
       return responseUtil.handleInternalError(res, err);
     })
   },
-
-
-
 };
 
 module.exports = UserController;
