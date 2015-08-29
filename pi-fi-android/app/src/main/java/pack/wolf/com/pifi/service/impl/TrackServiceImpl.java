@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
 
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.model.SearchType;
@@ -44,6 +45,6 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public void searchTracks(String query, SearchType searchType, Context context, Response.Listener<Track> response, Dialog dialog){
 
-    }        //stub
+    } //stub
 
 }

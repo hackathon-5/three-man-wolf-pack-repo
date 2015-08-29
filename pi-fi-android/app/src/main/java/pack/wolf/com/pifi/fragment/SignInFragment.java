@@ -116,6 +116,7 @@ public class SignInFragment extends Fragment {
             dialog.dismiss();
             SharedPreferenceUtil.saveAccessToken(response);
             SharedPreferenceUtil.setLoggedIn(true);
+            BaseActionBarActivity.hideKeyboard(context,rootView.findViewById(R.id.signin_button));
             navToMain();
         }
     }

@@ -12,6 +12,7 @@ import android.widget.Button;
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 import pack.wolf.com.pifi.application.AppConstants;
+import pack.wolf.com.pifi.util.SharedPreferenceUtil;
 
 public class BaseFragment extends Fragment {
 
@@ -40,6 +41,14 @@ public class BaseFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_base, container, false);
         } catch (InflateException e) {
         }
+
+        // check if logged in, go to main screen if logged in
+        if (SharedPreferenceUtil.isLoggedIn()) {
+            BaseActionBarActivity.fragmentManager.beginTransaction()
+                    .replace(R.id.container, MainFragment.newInstance())
+                    .addToBackStack(AppConstants.FRAGMENT_MAIN)
+                    .commit();
+        } // else continue
 
         // get context
         context = inflater.getContext();

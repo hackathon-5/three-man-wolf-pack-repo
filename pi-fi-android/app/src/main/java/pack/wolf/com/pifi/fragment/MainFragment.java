@@ -81,7 +81,8 @@ public class MainFragment extends Fragment {
                     }, dialog);
                 }
             }
-        },dialog);
+        }, dialog);
+
 
         // set title
         BaseActionBarActivity.setTitle(getString(R.string.home));
