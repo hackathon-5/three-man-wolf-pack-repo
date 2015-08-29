@@ -63,8 +63,9 @@ class PifiApp:
     self.playing = True;
     urllib.urlretrieve(trackUrl, "song.mp3")
     player = subprocess.Popen(["omxplayer",'song.mp3'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    player.wait()
+    time.sleep(10)
+    player.stdin.write("q")
     self.playing = False;
-    # player.stdin.write("q")
+    
 
 	
