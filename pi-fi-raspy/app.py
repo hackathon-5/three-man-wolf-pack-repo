@@ -24,7 +24,6 @@ class PifiApp:
     while True:
       item = self.queue.get()
       headers = {'Authorization': 'Bearer '+self.accessToken}
-      print(item)
       payload = {'deviceId': item, 'time': time.time()}
       request = requests.post(self.api + '/device/log', payload, headers=headers)
       self.queue.task_done()
