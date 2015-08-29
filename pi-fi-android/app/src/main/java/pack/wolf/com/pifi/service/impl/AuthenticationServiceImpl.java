@@ -36,7 +36,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("grant_type", "password");
         headers.put(AppConstants.AUTHORIZATION, AppConstants.BASIC_PREFIX + base64EncodedCredentials);
 
         Map<String, String> params = new HashMap<>();
