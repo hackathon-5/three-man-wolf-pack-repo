@@ -11,13 +11,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Response;
+
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
+import pack.wolf.com.pifi.application.AppConstants;
+import pack.wolf.com.pifi.model.AccessToken;
 import pack.wolf.com.pifi.model.User;
 import pack.wolf.com.pifi.model.UserRequest;
+import pack.wolf.com.pifi.service.AuthenticationServiceFactory;
 import pack.wolf.com.pifi.service.api.UserService;
 import pack.wolf.com.pifi.service.impl.UserServiceImpl;
 import pack.wolf.com.pifi.util.DialogUtil;
+import pack.wolf.com.pifi.util.SharedPreferenceUtil;
 
 public class SignUpFragment extends Fragment {
 
@@ -79,7 +85,23 @@ public class SignUpFragment extends Fragment {
                 userRequest.setAdmin(true);
 
                 UserService userService = new UserServiceImpl();
-                userService.createUser(context,userRequest,dialog);
+                userService.createUser(context, userRequest, dialog, new Response.Listener<User>() {
+                    @Override
+                    public void onResponse(User response) {
+                        AuthenticationServiceFactory.getInstance().login(username, password, context, new Response.Listener<AccessToken>() {
+
+                            @Override
+                            public void onResponse(AccessToken response) {
+                                if (dialog.isShowing()) {
+                                    dialog.dismiss();
+                                }
+                                SharedPreferenceUtil.saveAccessToken(response);
+                                SharedPreferenceUtil.setLoggedIn(true);
+                                navToMain();
+                            }
+                        },dialog);
+                    }
+                });
             }
         });
 
@@ -87,5 +109,14 @@ public class SignUpFragment extends Fragment {
 
     }
 
+    protected void navToMain() {
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, MainFragment.newInstance())
+                .addToBackStack(AppConstants.FRAGMENT_MAIN
+                )
+                .commit();
+
+    }
 
 }

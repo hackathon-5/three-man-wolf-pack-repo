@@ -14,11 +14,13 @@ public interface UserService {
 
     void getCurrentUser(Context context, Response.Listener<User> response, Dialog dialog);
 
-    void createUser(final Context context, final UserRequest user, Dialog dialog);
+    void createUser(final Context context, final UserRequest user, Dialog dialog, Response.Listener<User> responseListener);
 
     void updateUser(final Context context, final User user, Dialog dialog, Response.Listener<User> responseListener);
 
     void saveProfilePicture(Context context, ByteArrayOutputStream imageStream, User user, Response.Listener<User> response);
+
+    void saveBlueToothAddress(Context context, User user, Response.Listener<Object> response);
 
 }
 

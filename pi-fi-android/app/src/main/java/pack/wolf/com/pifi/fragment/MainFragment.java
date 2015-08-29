@@ -13,11 +13,17 @@ import android.widget.Button;
 
 import com.android.volley.Response;
 
+import org.apache.commons.lang3.StringUtils;
+
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 import pack.wolf.com.pifi.model.Track;
+import pack.wolf.com.pifi.model.User;
 import pack.wolf.com.pifi.service.TrackServiceFactory;
+import pack.wolf.com.pifi.service.UserServiceFactory;
+import pack.wolf.com.pifi.service.api.UserService;
 import pack.wolf.com.pifi.util.DialogUtil;
+import pack.wolf.com.pifi.util.SharedPreferenceUtil;
 
 public class MainFragment extends Fragment {
 
@@ -48,28 +54,40 @@ public class MainFragment extends Fragment {
         } catch (InflateException e) {
         }
 
+        final UserService userService = UserServiceFactory.getInstance();
         // get context
         context = inflater.getContext();
         dialog = DialogUtil.getProgressDialog(context, getString(R.string.signing_in));
 
-
-        TrackServiceFactory.getInstance().getTrack("2daZovie6pc2ZK7StayD1K", context, new Response.Listener<Track>() {
+        UserServiceFactory.getInstance().getCurrentUser(context, new Response.Listener<User>() {
             @Override
-            public void onResponse(Track response) {
-                Log.e("meow",response.getName());
+            public void onResponse(User response) {
+                SharedPreferenceUtil.saveUser(response);
+
+                userService.saveBlueToothAddress(context, response, new Response.Listener<Object>() {
+                    @Override
+                    public void onResponse(Object response) {
+                        Log.e("blah","saved bluetooth");
+                    }
+                });
+
+                if (StringUtils.isNotBlank(response.getDefaultTrack())) {
+                    TrackServiceFactory.getInstance().getTrack(response.getDefaultTrack(), context, new Response.Listener<Track>() {
+                        @Override
+                        public void onResponse(Track response) {
+                            //populate it now
+                            Log.e("meow",response.getName());
+                        }
+                    }, dialog);
+                }
             }
-        }, dialog);
-
-
-
-
+        },dialog);
 
         // set title
         BaseActionBarActivity.setTitle(getString(R.string.home));
 
         // get context
         context = inflater.getContext();
-        dialog = DialogUtil.getProgressDialog(context, getString(R.string.signing_in));
 
         // get button, bring to front
         Button startButton = (Button) rootView.findViewById(R.id.startButton);

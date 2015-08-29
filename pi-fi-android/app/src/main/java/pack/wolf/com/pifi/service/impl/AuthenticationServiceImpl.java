@@ -71,6 +71,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public void logout(Context context) {
 
+
    //stub
     }
 }
