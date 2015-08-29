@@ -10,7 +10,8 @@ def main():
     app = PifiApp()
 
     app.login()
-    app.getTrack()
+    trackUrl = app.getTrack('2daZovie6pc2ZK7StayD1K')
+    app.playTrack(trackUrl)
 
 if __name__ == "__main__": 
   main()
