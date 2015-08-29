@@ -66,17 +66,6 @@ public class BaseActionBarActivity extends AppCompatActivity {
                 .replace(R.id.container, BaseFragment.newInstance())
                 .addToBackStack(AppConstants.FRAGMENT_BASE)
                 .commit();
-//
-//        IntentFilter filter = new IntentFilter(
-//                "android.bluetooth.device.action.PAIRING_REQUEST");
-//
-//
-//        /*
-//         * Registering a new BTBroadcast receiver from the Main Activity context
-//         * with pairing request event
-//         */
-//        registerReceiver(
-//                new PairingRequest(), filter);
 
         // Initializes Bluetooth adapter.
         final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);

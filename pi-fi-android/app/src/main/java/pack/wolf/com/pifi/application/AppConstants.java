@@ -36,12 +36,12 @@ public class AppConstants {
     //fragment stuff
     public static final String CLASS_PREFIX = "pack.wolf.com.pifi.fragment.";
     public static final String FRAGMENT_BASE = "BaseFragment";
-    public static final String FRAGMENT_MAIN = "MainFragment";
     public static final String FRAGMENT_SIGNUP = "SignupFragment";
     public static final String FRAGMENT_SIGNIN = "SigninFragment";
     public static final String FRAGMENT_SEARCH = "SearchFragment";
     public static final String FRAGMENT_TRACK = "TrackFragment";
     public static final String FRAGMENT_SETTINGS = "SettingsFragment";
+    public static final String FRAGMENT_MAIN = "MainFragment";
 
 
 }

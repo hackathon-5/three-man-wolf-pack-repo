@@ -17,6 +17,7 @@ import com.android.volley.Response;
 
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
+import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.service.BluetoothService;
 import pack.wolf.com.pifi.service.api.AuthenticationService;
 import pack.wolf.com.pifi.service.impl.AuthenticationServiceImpl;
@@ -28,6 +29,8 @@ public class SignInFragment extends Fragment {
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
     private static final int REQUEST_ENABLE_DSC = 3;
+
+     ProgressDialog dialog;
 
     private static View rootView;
     private Context context;
@@ -61,6 +64,7 @@ public class SignInFragment extends Fragment {
         // get context
         context = inflater.getContext();
 
+        dialog = DialogUtil.getProgressDialog(context,getString(R.string.signing_in));
         Log.e("blah", "\n\n" + BluetoothUtil.getBlueToothAddress(getActivity()) + "\n\n");
 
         // get user creds
@@ -68,7 +72,6 @@ public class SignInFragment extends Fragment {
         final EditText password_box = (EditText) rootView.findViewById(R.id.password);
 
         // sign in
-        final ProgressDialog dialog = DialogUtil.getProgressDialog(context,getString(R.string.signing_in));
         Button button_signin = (Button) rootView.findViewById(R.id.signin_button);
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +92,18 @@ public class SignInFragment extends Fragment {
 
     }
 
+    protected void navToMain() {
+        dialog.dismiss();
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, MainFragment.newInstance())
+                .addToBackStack(AppConstants.FRAGMENT_MAIN
+                )
+                .commit();
+    }
+
     // sign in response listener
-    private static class SignInListener implements Response.Listener {
+    private class SignInListener implements Response.Listener {
 
         Context context;
 
@@ -100,7 +113,8 @@ public class SignInFragment extends Fragment {
 
         @Override
         public void onResponse(Object response) {
-            Object status = response;
+            dialog.dismiss();
+            navToMain();
         }
 
     }

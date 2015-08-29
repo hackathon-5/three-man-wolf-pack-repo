@@ -3,7 +3,6 @@ package pack.wolf.com.pifi.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 import pack.wolf.com.pifi.application.AppConstants;
-import pack.wolf.com.pifi.util.BluetoothUtil;
 
 public class BaseFragment extends Fragment {
 
