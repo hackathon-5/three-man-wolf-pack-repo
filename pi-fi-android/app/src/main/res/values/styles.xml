@@ -51,10 +51,10 @@
         <item name="android:layout_margin">6dp</item>
     </style>
 
-    <style name="edittext_username">
+    <style name="edittext_email">
         <item name="android:background">@color/white</item>
         <item name="android:textSize">14dp</item>
-        <item name="android:hint">@string/username</item>
+        <item name="android:hint">@string/email</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">6dp</item>

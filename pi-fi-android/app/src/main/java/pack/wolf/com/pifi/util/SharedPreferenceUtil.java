@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 
 import pack.wolf.com.pifi.PifiApplication;
 import pack.wolf.com.pifi.model.AccessToken;
+import pack.wolf.com.pifi.model.User;
 
 /**
  * Created by ryanmoore on 2/24/15.
@@ -40,9 +41,13 @@ public class SharedPreferenceUtil {
     public static void saveAccessToken(AccessToken accessToken) {
 
         Gson gson = new Gson ();
-        String json = gson.toJson (accessToken);
+        String json = gson.toJson(accessToken);
         SharedPreferences.Editor editor = sharedPreferences.edit ();
         editor.putString(ACCESS_TOKEN, json);
         editor.commit();
+    }
+
+    public static void saveUser(User user) {
+
     }
 }

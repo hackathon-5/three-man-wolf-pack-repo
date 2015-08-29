@@ -1,5 +1,6 @@
 package pack.wolf.com.pifi.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,18 +60,22 @@ public class SignInFragment extends Fragment {
         Log.e("blah", "\n\n" + BluetoothUtil.getBlueToothAddress(getActivity()) + "\n\n");
 
         // get user creds
-        EditText username_box = (EditText) rootView.findViewById(R.id.username);
-        EditText password_box = (EditText) rootView.findViewById(R.id.password);
-        final String username = username_box.getText().toString();
-        final String password = password_box.getText().toString();
+        final EditText username_box = (EditText) rootView.findViewById(R.id.email);
+        final EditText password_box = (EditText) rootView.findViewById(R.id.password);
 
         // sign in
+        final ProgressDialog dialog = DialogUtil.getProgressDialog(context,getString(R.string.signing_in));
         Button button_signin = (Button) rootView.findViewById(R.id.signin_button);
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.show();
+
+                String username = username_box.getText().toString();
+                String password = password_box.getText().toString();
+
                 AuthenticationService auth = new AuthenticationServiceImpl();
-                auth.login(username,password,context,new SignInListener(context),DialogUtil.getProgressDialog(context,getString(R.string.signing_in)));
+                auth.login(username,password,context,new SignInListener(context),dialog);
             }
         });
 
@@ -93,6 +98,7 @@ public class SignInFragment extends Fragment {
         public void onResponse(Object response) {
             Object status = response;
         }
+
     }
 
 

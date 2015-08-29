@@ -10,7 +10,10 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @SerializedName(value = "_id")
-    private Long id;
+    private String id;
+
+    @SerializedName(value = "bluetooth_id")
+    private String bluetooth_id;
 
     @SerializedName(value = "firstname")
     private String firstName;
@@ -27,12 +30,20 @@ public class User implements Serializable {
     @SerializedName(value = "password_reset_token")
     private String passwordResetToken;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getBluetooth_id() {
+        return bluetooth_id;
+    }
+
+    public void setBluetooth_id(String bluetooth_id) {
+        this.bluetooth_id = bluetooth_id;
     }
 
     public String getFirstName() {
