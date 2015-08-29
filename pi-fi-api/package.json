@@ -1,8 +1,8 @@
 {
-  "name": "Restify-Seed",
-  "description": "Starting point for building a scalable Restify API",
-  "version": "2.1.0",
-  "author": "Matthew Vita <matthewvita@live.com>",
+  "name": "pi-fi",
+  "description": "raspberry pi bluetooth proximity app",
+  "version": "1.0",
+  "author": "Kevin Kolz <kckolz@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^0.8.5",

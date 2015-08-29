@@ -1,6 +1,7 @@
 package pack.wolf.com.pifi.activity;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.fragment.BaseFragment;
 import pack.wolf.com.pifi.fragment.SettingsFragment;
+import pack.wolf.com.pifi.service.PairingRequest;
 
 public class BaseActionBarActivity extends AppCompatActivity {
 
@@ -61,6 +63,16 @@ public class BaseActionBarActivity extends AppCompatActivity {
                 .addToBackStack(AppConstants.FRAGMENT_BASE)
                 .commit();
 
+        IntentFilter filter = new IntentFilter(
+                "android.bluetooth.device.action.PAIRING_REQUEST");
+
+
+        /*
+         * Registering a new BTBroadcast receiver from the Main Activity context
+         * with pairing request event
+         */
+        registerReceiver(
+                new PairingRequest(), filter);
     }
 
     @Override

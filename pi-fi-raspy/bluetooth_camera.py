@@ -10,12 +10,16 @@
 # ...
 
 import os, time, platform
+
 from datetime import datetime
 from urllib import urlencode
 from urllib2 import urlopen, URLError
 
 # get the name of this scanner
 scanner_id = os.popen('uname -n').readline().strip()
+
+# create instance of camera class and set up directory and file info
+BLUEPIC_HOME_DIR='/home/pi/bluepic/'
 
 # devices in the area
 devices_here = {}
@@ -41,7 +45,7 @@ def get_bt_ids():
         for u in unparsed_data:
             # get the ID of the bluetooth devices
             id = u.split()[0]
-            # ids.append(id)
+            ids.append(id)
             
     return ids
 
@@ -52,13 +56,7 @@ def scan():
     # get all of the bluetooth devices nearby
     ids = get_bt_ids()
     for id in ids:
-        # only record if the device is new
-        if not devices_here.has_key(id):
-            # if the device is not here, it must have just entered the area.
-            # this is a significant event. upload it to the server.
-            upload_to_db({'time': time, 'device_id': id, 
-                          'scanner_id': scanner_id, 'event_type': 'ENTER'})
-            
+        print("hello: %s" % id)
         # note the devices that are here
         devices_here[id] = time
 
@@ -69,17 +67,17 @@ def cleanup():
     # get the current time
     time = datetime.now()
     # if any of the devices are stale, remove them from the list
-    for device in devices_here:
+    # for device in devices_here:
         # get the last time the device was seen
-        last_seen = devices_here[device]
+        # last_seen = devices_here[device]
         # if this device was last seen too long ago
-        if (time - last_seen).seconds > AWAY_HEURISTIC:
-            # flag it for removal to avoid
-            # RuntimeError: dictionary changed size during iteration
-            del_keys.append(device)
-            # and notify the server that the device left
-            upload_to_db({'time': time, 'device_id': device, 
-                          'scanner_id': scanner_id, 'event_type': 'EXIT'})
+        # if (time - last_seen).seconds > AWAY_HEURISTIC:
+            # # flag it for removal to avoid
+            # # RuntimeError: dictionary changed size during iteration
+            # del_keys.append(device)
+            # # and notify the server that the device left
+            # upload_to_db({'time': time, 'device_id': device, 
+            #               'scanner_id': scanner_id, 'event_type': 'EXIT'})
 
     # remove flagged ids from the list of devices
     for k in del_keys:
@@ -87,8 +85,11 @@ def cleanup():
 
 def upload_to_db(params):
     """Upload data about an event to the server"""
-    print '%s: device %s , SCANID= %s at time %s' % (params['event_type'], params['device_id'], params['scanner_id'], params['time'])
     
+
+
+    # Display info on sceen
+    print '%s: device %s at time %s' % (params['event_type'], params['device_id'], params['time'])
     # massage the params to be right
     params['time'] = params['time'].strftime('%Y-%m-%d %H:%M:%S')
     # encode some parameters

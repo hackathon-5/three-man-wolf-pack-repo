@@ -15,7 +15,8 @@ var OAuthUsersSchema = new Schema({
   firstname: String,
   lastname: String,
   bluetooth: String,
-  tracks: [Schema.Types.Mixed]
+  defaultTrack: String,
+  tracks: [String]
 });
 
 function hashPassword(password) {
@@ -48,6 +49,21 @@ OAuthUsersSchema.static('saveTrack', function(id, track) {
   var model = this;
   model.update({_id:id},
     {$push: { 'tracks' : track }}, {upsert:true},
+    function(err, user){
+      if (err) {
+        dfd.reject(err);
+      } else {
+        dfd.resolve(user);
+      }
+    });
+  return dfd.promise;
+});
+
+OAuthUsersSchema.static('saveBluetooth', function(id, bluetooth) {
+  var dfd = Q.defer();
+  var model = this;
+  model.update({_id:id},
+    { bluetooth: bluetooth}, null,
     function(err, user){
       if (err) {
         dfd.reject(err);

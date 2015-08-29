@@ -23,6 +23,7 @@ var UserController = {
     user.email = req.body.email;
     user.password = req.body.password;
     user.password_reset_token = uuid.v1();
+    user.defaultTrack = '6NwbeybX6TDtXlpXvnUOZC';
     user.tracks = [];
     user.bluetooth = req.body.bluetooth;
 
@@ -56,7 +57,11 @@ var UserController = {
 
     // Use the User model to find all clients
     OAuthUsersSchema.findOne({'_id':userId}).then(function(user) {
-      return responseUtil.handleSuccess(res, user);
+      if(user) {
+        return responseUtil.handleSuccess(res, user);
+      } else {
+        return responseUtil.handleNotFoundRequest(res, "User Not Found");
+      }
     }, function(error) {
       return responseUtil.handleInternalError(res, error);
     })
@@ -71,8 +76,32 @@ var UserController = {
     var username = req.params.username;
 
     // Use the User model to find all clients
-    OAuthUsersSchema.find({'userName':username}).then(function(user) {
-      return responseUtil.handleSuccess(res, user);
+    OAuthUsersSchema.findOne({'userName':username}).then(function(user) {
+      if(user) {
+        return responseUtil.handleSuccess(res, user);
+      } else {
+        return responseUtil.handleNotFoundRequest(res, "Failed to retrieve user");
+      }
+    }, function() {
+      return responseUtil.handleInternalError(res, err);
+    })
+  },
+
+  getUserByBluetooth: function(req, res) {
+
+    if (!req.username) {
+      return res.sendUnauthenticated();
+    }
+
+    var bluetooth = req.params.bluetooth;
+
+    // Use the User model to find all clients
+    OAuthUsersSchema.findOne({'bluetooth':bluetooth}).then(function(user) {
+      if(user) {
+        return responseUtil.handleSuccess(res, user);
+      } else {
+        return responseUtil.handleNotFoundRequest(res, "Failed to retrieve user");
+      }
     }, function() {
       return responseUtil.handleInternalError(res, err);
     })
@@ -96,6 +125,7 @@ var UserController = {
         user.lastname=req.body.lastName;
         user.password=req.body.password;
         user.email=req.body.email;
+        user.defaultTrack = req.body.defaultTrack;
 
         OAuthUsersSchema.updateUser(user).then(function(user) {
           return responseUtil.handleSuccess(res, user);
@@ -126,7 +156,28 @@ var UserController = {
     }, function(error) {
       return responseUtil.handleInternalError(res, err);
     })
-  }
+  },
+
+  saveBluetooth: function(req,res) {
+
+    if (!req.username) {
+      return res.sendUnauthenticated();
+    }
+
+    //must be valid mongo id format or shit blows up
+    if (!objectid.isValid(req.body.id)) {
+      return responseUtil.handleBadRequest(res, 'Invalid userId format.');
+    }
+
+    OAuthUsersSchema.saveBluetooth(req.body.id, req.body.bluetooth).then(function(user) {
+      return responseUtil.handleSuccess(res, user);
+    }, function(error) {
+      return responseUtil.handleInternalError(res, err);
+    })
+  },
+
+
+
 };
 
 module.exports = UserController;

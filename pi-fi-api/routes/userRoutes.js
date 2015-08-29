@@ -7,6 +7,8 @@ function UserRoutes(api) {
   api.get('/api/user/:userId', userController.getUserById);
   api.put('/api/user', userController.updateUser);
   api.put('/api/user/track', userController.saveTrack);
+  api.get('/api/user/bluetooth/:bluetooth', userController.getUserByBluetooth);
+  api.put('/api/user/bluetooth', userController.saveBluetooth);
 }
 
 module.exports.routes = UserRoutes;

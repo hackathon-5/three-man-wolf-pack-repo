@@ -1,32 +1,31 @@
 package pack.wolf.com.pifi.fragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.Response;
-import com.google.android.gms.common.api.Api;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import pack.wolf.com.pifi.R;
-import pack.wolf.com.pifi.listener.AsyncTaskCompleteListener;
+import pack.wolf.com.pifi.service.BluetoothService;
 import pack.wolf.com.pifi.service.api.AuthenticationService;
 import pack.wolf.com.pifi.service.impl.AuthenticationServiceImpl;
+import pack.wolf.com.pifi.util.BluetoothUtil;
 import pack.wolf.com.pifi.util.DialogUtil;
 
 public class SignInFragment extends Fragment {
+
+    private static final int REQUEST_CONNECT_DEVICE = 1;
+    private static final int REQUEST_ENABLE_BT = 2;
+    private static final int REQUEST_ENABLE_DSC = 3;
 
     private static View rootView;
     private Context context;
@@ -57,6 +56,8 @@ public class SignInFragment extends Fragment {
         // get context
         context = inflater.getContext();
 
+        Log.e("blah", "\n\n" + BluetoothUtil.getBlueToothAddress(getActivity()) + "\n\n");
+
         // get user creds
         EditText username_box = (EditText) rootView.findViewById(R.id.username);
         EditText password_box = (EditText) rootView.findViewById(R.id.password);
@@ -72,6 +73,8 @@ public class SignInFragment extends Fragment {
                 auth.login(username,password,context,new SignInListener(context),DialogUtil.getProgressDialog(context,getString(R.string.signing_in)));
             }
         });
+
+        getActivity().startService(new Intent(getActivity(), BluetoothService.class));
 
         return rootView;
 

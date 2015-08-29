@@ -41,6 +41,7 @@ public class MainFragment extends Fragment {
         // get context
         context = inflater.getContext();
 
+
         return rootView;
 
     }
