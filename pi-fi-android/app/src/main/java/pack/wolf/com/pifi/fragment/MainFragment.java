@@ -1,7 +1,6 @@
 package pack.wolf.com.pifi.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.InflateException;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import pack.wolf.com.pifi.R;
-import pack.wolf.com.pifi.service.BluetoothService;
 
 public class MainFragment extends Fragment {
 
