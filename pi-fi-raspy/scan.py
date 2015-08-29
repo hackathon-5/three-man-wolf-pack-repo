@@ -133,6 +133,7 @@ def playSoundIfNecessary(arg):
         print "running"
 
 pifi = PifiApp()
+pifi.login()
 
 while (True):
     dev_id = 0
