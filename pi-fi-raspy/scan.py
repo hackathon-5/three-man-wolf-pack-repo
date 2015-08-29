@@ -101,7 +101,6 @@ def device_inquiry_with_with_rssi(sock):
                 addr = bluez.ba2str( pkt[1+6*i:1+6*i+6] )
                 rssi = struct.unpack("b", pkt[1+13*nrsp+i])[0]
                 results.append( ( addr, rssi ) )
-                print "[%s] RSSI: [%d]" % (addr, rssi)
         elif event == bluez.EVT_INQUIRY_COMPLETE:
             done = True
         elif event == bluez.EVT_CMD_STATUS:
