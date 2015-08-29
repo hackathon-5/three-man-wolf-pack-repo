@@ -3,6 +3,7 @@ package pack.wolf.com.pifi.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -48,6 +49,11 @@ public class SearchFragment extends Fragment {
         // color search view
         SearchView searchView = (SearchView) rootView.findViewById(R.id.search_view);
         searchView.setBackgroundColor(getResources().getColor(R.color.light_green));
+
+        // focus search bar
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+        searchView.requestFocusFromTouch();
 
         // get context
         context = inflater.getContext();
