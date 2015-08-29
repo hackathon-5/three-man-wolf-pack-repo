@@ -1,6 +1,9 @@
 package pack.wolf.com.pifi.activity;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.fragment.BaseFragment;
 import pack.wolf.com.pifi.fragment.SettingsFragment;
+import pack.wolf.com.pifi.service.BluetoothService;
 import pack.wolf.com.pifi.service.PairingRequest;
 
 public class BaseActionBarActivity extends AppCompatActivity {
@@ -25,6 +29,7 @@ public class BaseActionBarActivity extends AppCompatActivity {
     private Context context;
     public static FragmentManager fragmentManager;
     public static ActionBar actionBar;
+    public static BluetoothAdapter bluetoothAdapter;
     private Toolbar mToolbar;
     public static TextView mTitle;
 
@@ -73,6 +78,15 @@ public class BaseActionBarActivity extends AppCompatActivity {
          */
         registerReceiver(
                 new PairingRequest(), filter);
+
+        // Initializes Bluetooth adapter.
+        final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        bluetoothAdapter = bluetoothManager.getAdapter();
+        if(bluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE)
+        {
+            this.startService(new Intent(this, BluetoothService.class));
+
+        }
     }
 
     @Override
