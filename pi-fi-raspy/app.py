@@ -33,10 +33,8 @@ class PifiApp:
     return request.json()['preview_url']
 
   def playTrack(self, trackUrl):  
-    testfile = urllib.URLopener()
-    testfile.retrieve(trackUrl, "song.mp3")
-
-    player = subprocess.Popen(["mplayer", "song.mp3", "-ss", "30"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    urllib.urlretrieve(trackUrl, "song.mp3")
+    player = subprocess.Popen(["mplayer",'song.mp3'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     # player.stdin.write("q")
 

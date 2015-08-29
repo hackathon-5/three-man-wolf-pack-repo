@@ -85,10 +85,10 @@ var UserController = {
       return res.sendUnauthenticated();
     }
 
-    var username = req.params.username;
+    var bluetooth = req.params.bluetooth;
 
     // Use the User model to find all clients
-    OAuthUsersSchema.find({'userName':username}).then(function(user) {
+    OAuthUsersSchema.find({'bluetooth':bluetooth}).then(function(user) {
       return responseUtil.handleSuccess(res, user);
     }, function() {
       return responseUtil.handleInternalError(res, err);
