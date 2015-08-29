@@ -2,93 +2,97 @@
 
 // Load required packages
 var responseUtil = require('../util/responseUtil'),
-    config = require('./../config'),
-    querystring = require('querystring'),
-    restify = require('restify'),
-    redis = require("redis"),
-    redisClient = redis.createClient(),
-    querystring = require("querystring");
+config = require('./../config'),
+querystring = require('querystring'),
+restify = require('restify'),
+redis = require("redis"),
+redisClient = redis.createClient(),
+querystring = require("querystring"),
+Q = require('q');
+
+function login() {
+  var dfd = Q.defer();
+  var client = restify.createStringClient({
+    url: 'https://accounts.spotify.com',
+    accept: 'application/json'
+  });
+
+  client.basicAuth(config.spotifyClientId, config.spotifySecret);
+
+  client.post('/api/token', {grant_type: 'client_credentials'}, function(err, req, res, obj) {
+    if(res.statusCode === 200) {
+      redisClient.set("spotifyToken", JSON.parse(obj).access_token, redis.print);
+      dfd.resolve(JSON.parse(obj).access_token);
+    } else {
+      dfd.reject(err);
+    }
+  });
+
+  return dfd.promise;
+}
 
 var SpotifyController = {
 
-  login: function(req, res) {
-
-    var client = restify.createStringClient({
-      url: 'https://accounts.spotify.com',
-      accept: 'application/json'
-    });
-
-    client.basicAuth(config.spotifyClientId, config.spotifySecret);
-
-    var orginalres = res;
-
-    client.post('/api/token', {grant_type: 'client_credentials'}, function(err, req, res, obj) {
-      if(res.statusCode === 200) {
-        redisClient.set("spotifyToken", JSON.parse(obj).access_token, redis.print);
-        return responseUtil.handleSuccess(orginalres, obj);
-      } else {
-        return responseUtil.handleInternalError(orginalres, err);
-      }
-    });
-
-  },
-
   search: function(req, res) {
-    var originalRes = res;
 
-    redisClient.get("spotifyToken", function (err, token) {
-      if(token) {
-        var client = restify.createJsonClient({
-          url: 'https://api.spotify.com',
-          headers: {
-            Authorization: "Bearer "+token
-          }
-        });
+    if (!req.username) {
+      return res.sendUnauthenticated();
+    }
 
-        var searchparams = querystring.escape(req.params.query);
+    var originalRes = res,
+    client;
 
-        client.get('/v1/search?q='+searchparams+'&type='+req.params.type,  function(err, req, res, obj) {
-          if(res.statusCode === 200) {
-            return responseUtil.handleSuccess(originalRes, obj);
-          } else {
-            return responseUtil.handleInternalError(originalRes, err);
-          }
-        });
+    login().then(function(token) {
+      client = restify.createJsonClient({
+        url: 'https://api.spotify.com',
+        headers: {
+          Authorization: "Bearer "+token
+        }
+      });
+      var searchparams = querystring.escape(req.params.query);
 
-      } else {
-        responseUtil.handleUnauthorizedRequest(originalRes, err);
-      }
-    });    
+      client.get('/v1/search?q='+searchparams+'&type='+req.params.type,  function(err, req, res, obj) {
+        if(res.statusCode === 200) {
+          return responseUtil.handleSuccess(originalRes, obj);
+        } else {
+          return responseUtil.handleInternalError(originalRes, err);
+        }
+      });
+    }, function(error) {
+      return responseUtil.handleUnauthorizedRequest(originalRes, error);
+    })
+
   },
 
 
   getTrack: function(req, res) {
 
-    var originalRes = res;
+    if (!req.username) {
+      return res.sendUnauthenticated();
+    }
 
-    redisClient.get("spotifyToken", function (err, token) {
-      if(token) {
-        var client = restify.createJsonClient({
-          url: 'https://api.spotify.com',
-          headers: {
-            Authorization: "Bearer "+token
-          }
-        });
+    var originalRes = res,
+    client;
 
-        client.get('/v1/tracks/'+req.params.trackId,  function(err, req, res, obj) {
-          if(res.statusCode === 200) {
-            return responseUtil.handleSuccess(originalRes, obj);
-          } else {
-            return responseUtil.handleInternalError(originalRes, err);
-          }
-        });
+    login().then(function(token) {
+      client = restify.createJsonClient({
+        url: 'https://api.spotify.com',
+        headers: {
+          Authorization: "Bearer "+token
+        }
+      });
+      client.get('/v1/tracks/'+req.params.trackId,  function(err, req, res, obj) {
+        if(res.statusCode === 200) {
+          return responseUtil.handleSuccess(originalRes, obj);
+        } else {
+          return responseUtil.handleInternalError(originalRes, err);
+        }
+      });
+    }, function(error) {
+      return responseUtil.handleUnauthorizedRequest(originalRes, error);
+    });
 
-      } else {
-        responseUtil.handleUnauthorizedRequest(originalRes, err);
-      }
-    });    
-
-  }
+  }  
 };
 
 module.exports = SpotifyController
