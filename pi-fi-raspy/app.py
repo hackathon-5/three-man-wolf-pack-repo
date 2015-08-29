@@ -3,6 +3,9 @@
 import requests
 import subprocess
 import urllib
+import Queue
+import threading
+import time
 
 
 
@@ -15,6 +18,16 @@ class PifiApp:
     self.api = 'http://52.20.116.83:1337/api'
     self.proximity =-53
     self.playing = False
+    self.queue = Queue.Queue()
+
+  def postDeviceWorker(self):
+    while True:
+      item = self.queue.get()
+      headers = {'Authorization': 'Bearer '+self.accessToken}
+      print(item)
+      payload = {'deviceId': 'ABC', 'time': time.time()}
+      request = requests.post(self.api + '/device/log', payload, headers=headers)
+      self.queue.task_done()
 
 
   def determineSong(self, addrRssiTuple):
@@ -23,6 +36,13 @@ class PifiApp:
     sortedTuples = sorted(addrRssiTuple, key=lambda addrRssi: addrRssi[1]) 
     for nearestDevice in reversed(sortedTuples):
       if nearestDevice[1] > self.proximity and nearestDevice[0] not in visitedAddresses:
+
+        # Spin up a thread and pop it in the queue
+        t = threading.Thread(target=self.postDeviceWorker)
+        t.daemon = True
+        t.start()
+        self.queue.put(nearestDevice[0])
+
         print "[%s] RSSI: [%d]" % (nearestDevice[0], nearestDevice[1])
         visitedAddresses.append(nearestDevice[0])
         print(nearestDevice[0] + ' attempting device.')    
