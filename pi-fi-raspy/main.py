@@ -9,4 +9,8 @@ def main():
     #instantiate new RiskbandApp obj & start it
     app = PifiApp()
 
-if __name__ == "__main__": main()
+    app.login()
+    app.getTrack()
+
+if __name__ == "__main__": 
+  main()
