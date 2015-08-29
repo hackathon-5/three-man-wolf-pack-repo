@@ -26,6 +26,7 @@ class PifiApp:
         print(nearestDevice[0] + ' attempting device.')    
         try:
           user = self.getUserByBluetooth(nearestDevice[0])
+          print(nearestDevice[0])
           print(user)
           track = self.getTrack(user.devices[0])
           print(track)
@@ -39,6 +40,7 @@ class PifiApp:
     payload = {'grant_type': 'password', 'username': 'kckolz@gmail.com', 'password': 'password'}
     request = requests.post(self.api + '/login', payload, auth=('kckolz', 'password'))
     self.accessToken = request.json()['access_token']
+    print('access token: %s' % self.accessToken)
 
     headers = {'Authorization': 'Bearer '+self.accessToken}
 
