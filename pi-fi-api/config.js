@@ -29,3 +29,7 @@ exports.mongo = {
 }
 
 exports.seedDB = false;
+
+exports.spotifyClientId = '8d9eb9df9b6a46dfb56c2814033d8368';
+exports.spotifySecret = '79984362550a4818a34c802f7ec3e06b';
+exports.spotifyRedirectUri = 'http://localhost:1337/api/spotify/callback';

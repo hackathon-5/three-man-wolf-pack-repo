@@ -10,7 +10,8 @@ var ClientController = {
 
     OAuthClientsSchema.find({clientId:req.body.clientId}).exec()
       .then(function(client) {
-        return responseUtil.handleBadRequest(res, 'A client already exists with that id.');
+        if(client.length)
+          return responseUtil.handleBadRequest(res, 'A client already exists with that id.');
       }, function(error) {
         return responseUtil.handleInternalError(res, error);
       });
@@ -18,7 +19,7 @@ var ClientController = {
     // Save the client and check for errors
     OAuthClientsSchema.register(req.body.clientId, req.body.secret)
       .then(function(client) {
-        return responseUtil.handleSuccess(res, client.clientId);
+        return responseUtil.handleSuccess(res, client._id);
       }, function(error) {
         return responseUtil.handleInternalError(res, err);
       })

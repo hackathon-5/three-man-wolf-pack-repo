@@ -23,7 +23,11 @@ OAuthClientSchema.static('register', function(clientId, secret) {
 OAuthClientSchema.static('authenticate', function(clientId, secret, cb) {
 
   this.findOne({ clientId: clientId }).then(function(client) {
-    cb(null, bcrypt.compareSync(secret, client.secret) ? client : null);
+    if(client) {
+      cb(null, bcrypt.compareSync(secret, client.secret) ? client : null);
+    } else {
+      throw error;
+    }
   }, function(error) {
     return error;
   })

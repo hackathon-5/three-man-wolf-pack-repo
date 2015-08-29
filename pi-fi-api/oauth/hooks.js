@@ -29,21 +29,19 @@ exports.validateClient = function (credentials, req, cb) {
 };
 
 exports.grantUserToken = function (credentials, req, cb) {
-    UserModel.getUser(credentials.username, credentials.password, function (err, user) {
-        if(user) {
-            // If the user authenticates, generate a token for them and store it so `exports.authenticateToken` below
-            // can look it up later.
-            var token = generateToken(credentials.username + ":" + credentials.password);
-            redisClient.set(token, credentials.username, redis.print);
+    UserModel.getUser(credentials.username, credentials.password).then(function(user) {
+        // If the user authenticates, generate a token for them and store it so `exports.authenticateToken` below
+        // can look it up later.
+        var token = generateToken(credentials.username + ":" + credentials.password);
+        redisClient.set(token, credentials.username, redis.print);
 
-            // Call back with the token so Restify-OAuth2 can pass it on to the client.
-            return cb(null, token);
-        } else {
-             // Call back with `false` to signal the username/password combination did not authenticate.
-            // Calling back with an error would be reserved for internal server error situations.
-            cb(null, false);
-        }
-    });
+        // Call back with the token so Restify-OAuth2 can pass it on to the client.
+        return cb(null, token);
+    }, function(error) {
+        // Call back with `false` to signal the username/password combination did not authenticate.
+        // Calling back with an error would be reserved for internal server error situations.
+        cb(null, false);
+    })
 };
 
 exports.authenticateToken = function (token, req, cb) {
