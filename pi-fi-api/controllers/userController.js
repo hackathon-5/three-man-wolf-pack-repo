@@ -23,6 +23,8 @@ var UserController = {
     user.email = req.body.email;
     user.password = req.body.password;
     user.password_reset_token = uuid.v1();
+    user.tracks = [];
+    user.bluetooth = req.body.bluetooth;
 
     OAuthUsersSchema.findOne({email:req.body.email}).then(function(user) {
       if(user) {
@@ -103,6 +105,24 @@ var UserController = {
       } else {
         return responseUtil.handleNotFoundRequest(res, 'Unable to find specified user.');
       }
+    }, function(error) {
+      return responseUtil.handleInternalError(res, err);
+    })
+  },
+
+  saveTrack: function(req,res) {
+
+    if (!req.username) {
+      return res.sendUnauthenticated();
+    }
+
+    //must be valid mongo id format or shit blows up
+    if (!objectid.isValid(req.body.id)) {
+      return responseUtil.handleBadRequest(res, 'Invalid userId format.');
+    }
+
+    OAuthUsersSchema.saveTrack(req.body.id, req.body.track).then(function(user) {
+      return responseUtil.handleSuccess(res, user);
     }, function(error) {
       return responseUtil.handleInternalError(res, err);
     })
