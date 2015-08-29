@@ -2,6 +2,8 @@ package pack.wolf.com.pifi.service.impl;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -13,6 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+import pack.wolf.com.pifi.PifiApplication;
+import pack.wolf.com.pifi.R;
+import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.model.AccessToken;
 import pack.wolf.com.pifi.model.ErrorResponse;
@@ -21,6 +26,7 @@ import pack.wolf.com.pifi.network.GsonRequest;
 import pack.wolf.com.pifi.network.VolleyManager;
 import pack.wolf.com.pifi.service.api.AuthenticationService;
 import pack.wolf.com.pifi.util.ErrorUtil;
+import pack.wolf.com.pifi.util.SharedPreferenceUtil;
 
 /**
  * Created by ryanmoore on 6/8/15.
@@ -69,8 +75,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void logout(Context context) {
+    public void logout(Context context, FragmentManager fragmentManager) {
+        SharedPreferenceUtil.setLoggedIn(false);
 
-   //stub
+        Intent intent = new Intent(context, BaseActionBarActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }
