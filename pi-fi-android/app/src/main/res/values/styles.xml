@@ -100,9 +100,6 @@
         <item name="android:layout_marginRight">6dp</item>
         <item name="android:textColor">@color/black</item>
     </style>
-
-<<<<<<< HEAD
-
     <style name="user_search_chevron">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -120,8 +117,6 @@
         <item name="android:layout_marginLeft">15dp</item>
     </style>
 
-=======
->>>>>>> 2bbe6d714048e9feae762007cd08fac783179424
     <style name="start_search_header">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

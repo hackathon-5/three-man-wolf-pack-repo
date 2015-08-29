@@ -21,11 +21,6 @@ import android.widget.TextView;
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.fragment.BaseFragment;
-<<<<<<< HEAD
-import pack.wolf.com.pifi.fragment.SettingsFragment;
-=======
-import pack.wolf.com.pifi.fragment.SearchFragment;
->>>>>>> 2bbe6d714048e9feae762007cd08fac783179424
 import pack.wolf.com.pifi.service.BluetoothService;
 import pack.wolf.com.pifi.util.DialogUtil;
 

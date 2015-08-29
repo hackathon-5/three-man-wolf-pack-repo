@@ -45,6 +45,7 @@ public class UserSearchActivity extends BaseActionBarActivity2 {
         this.context = this;
         searchResultListView = (ListView) findViewById(R.id.searchResultListView);
 
+        enableSearchBar(true);
         handleIntent(getIntent());
 
     }

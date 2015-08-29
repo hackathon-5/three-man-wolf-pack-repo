@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
-import pack.wolf.com.pifi.fragment.SettingsFragment;
 import pack.wolf.com.pifi.service.BluetoothService;
 
 public class BaseActionBarActivity2 extends ActionBarActivity {
@@ -50,7 +49,7 @@ public class BaseActionBarActivity2 extends ActionBarActivity {
 
         // get context
         this.context = this;
-
+        getActionBar().show();
         // Initializes Bluetooth adapter.
         final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bluetoothAdapter = bluetoothManager.getAdapter();
@@ -103,12 +102,6 @@ public class BaseActionBarActivity2 extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.action_settings:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, SettingsFragment.newInstance())
-                        .addToBackStack(AppConstants.FRAGMENT_SETTINGS)
-                        .commit();
-                break;
             case R.id.action_search:
                 startActivity(new Intent(context, UserSearchActivity.class));
                 break;

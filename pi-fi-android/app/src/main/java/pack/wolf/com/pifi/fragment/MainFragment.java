@@ -2,13 +2,10 @@ package pack.wolf.com.pifi.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-<<<<<<< HEAD
 import android.content.Intent;
-=======
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
->>>>>>> 2bbe6d714048e9feae762007cd08fac783179424
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
