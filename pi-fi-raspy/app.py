@@ -20,7 +20,7 @@ class PifiApp:
 
     visitedAddresses = []
     sortedTuples = sorted(addrRssiTuple, key=lambda addrRssi: addrRssi[1]) 
-    for nearestDevice in sortedTuples:
+    for nearestDevice in reversed(sortedTuples):
       if nearestDevice[1] > self.proximity and nearestDevice[0] not in visitedAddresses:
         visitedAddresses.append(nearestDevice[0])
         print(nearestDevice[0] + ' attempting device.')    
