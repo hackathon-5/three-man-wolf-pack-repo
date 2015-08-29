@@ -37,7 +37,7 @@ class PifiApp:
       if nearestDevice[1] > self.proximity and nearestDevice[0] not in visitedAddresses:
 
         # Spin up a thread and pop it in the queue
-        t = threading.Thread(target=postDeviceWorker)
+        t = threading.Thread(target=self.postDeviceWorker)
         t.daemon = True
         t.start()
         self.queue.put(nearestDevice[0])
