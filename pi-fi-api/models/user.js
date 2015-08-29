@@ -15,7 +15,8 @@ var OAuthUsersSchema = new Schema({
   firstname: String,
   lastname: String,
   bluetooth: String,
-  tracks: [Schema.Types.Mixed]
+  defaultTrack: String,
+  tracks: [String]
 });
 
 function hashPassword(password) {
