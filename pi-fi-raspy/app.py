@@ -19,13 +19,13 @@ class PifiApp:
   def determineSong(self, addrRssiTuple):
 
     visitedAddresses = []
-    sortedTuples = sorted(addrRssiTuple, key=lambda student: addrRssi[1]) 
+    sortedTuples = sorted(addrRssiTuple, key=lambda addrRssi: addrRssi[1]) 
     for nearestDevice in sortedTuples:
       if nearestDevice[1] > self.proximity and nearestDevice[0] not in visitedAddresses:
         print(nearestDevice[0] + ' attempting device.')    
         try:
           self.getUserByBluetooth(nearestDevice[0])
-        except Error:
+        except:
           print('Unable to find device for %s' % nearestDevice[0])
 
 
