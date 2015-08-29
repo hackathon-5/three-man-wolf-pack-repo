@@ -45,7 +45,7 @@ var SpotifyController = {
           }
         });
 
-        var searchparams = querystring.escape("linkin park");
+        var searchparams = querystring.escape(req.params.query);
 
         client.get('/v1/search?q='+searchparams+'&type='+req.params.type,  function(err, req, res, obj) {
           if(res.statusCode === 200) {

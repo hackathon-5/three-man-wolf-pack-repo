@@ -14,9 +14,6 @@ var api = restify.createServer({
   formatters: {
     'application/json': function(req, res, body) {
       return JSON.stringify(body);
-    },
-    'application/x-www-form-urlencoded': function(req, res, body) {
-      console.log(body);
     }
   },
   acceptable: ["application/json", "application/x-www-form-urlencoded"]
@@ -61,7 +58,7 @@ api.use(function(req, res, next) {
   next();
 });
 
-restifyOAuth2.ropc(api, { tokenEndpoint: '/login', hooks: hooks });
+restifyOAuth2.ropc(api, { tokenEndpoint: '/api/login', hooks: hooks });
 
 //Iterates through all ./routes files to find matching route
 fs.readdirSync('./routes').forEach(function(curFile) {
