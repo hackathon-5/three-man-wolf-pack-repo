@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import pack.wolf.com.pifi.R;
+import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 
 public class SettingsFragment extends Fragment {
 
@@ -37,6 +38,9 @@ public class SettingsFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         } catch (InflateException e) {
         }
+
+        // set title
+        BaseActionBarActivity.setTitle(getString(R.string.action_settings));
 
         // get context
         context = inflater.getContext();

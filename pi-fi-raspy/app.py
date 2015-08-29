@@ -40,6 +40,7 @@ class PifiApp:
         t.start()
         self.queue.put(nearestDevice[0])
 
+        print "[%s] RSSI: [%d]" % (nearestDevice[0], nearestDevice[1])
         visitedAddresses.append(nearestDevice[0])
         print(nearestDevice[0] + ' attempting device.')    
         try:

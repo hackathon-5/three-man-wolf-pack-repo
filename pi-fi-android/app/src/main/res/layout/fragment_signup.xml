@@ -6,8 +6,8 @@
     style="@style/layout">
 
     <EditText
-        android:id="@+id/username"
-        style="@style/edittext_username" />
+        android:id="@+id/email"
+        style="@style/edittext_email" />
     <EditText
         android:id="@+id/password"
         style="@style/edittext_password" />

@@ -7,7 +7,9 @@ public class AppConstants {
     //logger tag
     public static final String LOG_TAG = "Pifi";
 
-    public static final String METHOD_TOKENS = "api/1/oauth/token";
+    public static final String METHOD_TOKENS = "login/";
+    public static final String METHOD_USER = "user/";
+    public static final String METHOD_TRACK = "spotify/getTrack/";
 
     public static final int REQUEST_TIMEOUT = 30000;
 
@@ -28,7 +30,7 @@ public class AppConstants {
     //env specific stuff
     public static final String BASIC_USER = "rmoore4146+99";
     public static final String BASIC_SECRET = "fractals";
-    public static final String SERVER_PATH = "http://52.20.116.83:1337/";
+    public static final String SERVER_PATH = "http://52.20.116.83:1337/api/";
 
     //fragment stuff
     public static final String CLASS_PREFIX = "pack.wolf.com.pifi.fragment.";
