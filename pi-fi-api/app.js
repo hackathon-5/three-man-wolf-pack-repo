@@ -64,7 +64,7 @@ restifyOAuth2.ropc(api, { tokenEndpoint: '/api/login', hooks: hooks });
 //Iterates through all ./routes files to find matching route
 fs.readdirSync('./routes').forEach(function(curFile) {
   if (curFile.substr(-3) === '.js') {
-    var route = require(path.join(__dirname, 'routes', curFile));
+    var route = require(path.join(__dirname, '/routes', curFile));
     route.routes(api);
   }
 });
