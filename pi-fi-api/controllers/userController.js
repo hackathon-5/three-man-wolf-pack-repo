@@ -23,6 +23,7 @@ var UserController = {
     user.email = req.body.email;
     user.password = req.body.password;
     user.password_reset_token = uuid.v1();
+    user.defaultTrack = req.body.defaultTrack;
     user.tracks = [];
     user.bluetooth = req.body.bluetooth;
 
@@ -78,6 +79,22 @@ var UserController = {
     })
   },
 
+  getUserByBluetooth: function(req, res) {
+
+    if (!req.username) {
+      return res.sendUnauthenticated();
+    }
+
+    var username = req.params.username;
+
+    // Use the User model to find all clients
+    OAuthUsersSchema.find({'userName':username}).then(function(user) {
+      return responseUtil.handleSuccess(res, user);
+    }, function() {
+      return responseUtil.handleInternalError(res, err);
+    })
+  },
+
   updateUser: function(req,res) {
 
     if (!req.username) {
@@ -96,6 +113,7 @@ var UserController = {
         user.lastname=req.body.lastName;
         user.password=req.body.password;
         user.email=req.body.email;
+        user.defaultTrack = req.body.defaultTrack;
 
         OAuthUsersSchema.updateUser(user).then(function(user) {
           return responseUtil.handleSuccess(res, user);
