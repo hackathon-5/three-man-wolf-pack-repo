@@ -26,7 +26,9 @@ class PifiApp:
         print(nearestDevice[0] + ' attempting device.')    
         try:
           user = self.getUserByBluetooth(nearestDevice[0])
+          print(user)
           track = self.getTrack(user.devices[0])
+          print(track)
           self.playTrack(track)
 
         except:
