@@ -5,10 +5,17 @@
     android:layout_height="match_parent"
     style="@style/layout">
 
-    <TextView
+    <android.support.v7.widget.SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Test"/>
+        android:id="@+id/search_view"
+        android:layout_gravity="right">
+    </android.support.v7.widget.SearchView>
 
+    <ListView
+        android:id="@+id/list_tracks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
 
 </LinearLayout>
