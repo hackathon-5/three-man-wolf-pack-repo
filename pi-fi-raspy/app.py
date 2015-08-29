@@ -25,7 +25,10 @@ class PifiApp:
         visitedAddresses.append(nearestDevice[0])
         print(nearestDevice[0] + ' attempting device.')    
         try:
-          self.getUserByBluetooth(nearestDevice[0])
+          user = self.getUserByBluetooth(nearestDevice[0])
+          track = self.getTrack(user.devices[0])
+          self.playTrack(track)
+          
         except:
           print('Unable to find device for %s' % nearestDevice[0])
 
@@ -54,7 +57,7 @@ class PifiApp:
   def playTrack(self, trackUrl):  
 
     urllib.urlretrieve(trackUrl, "song.mp3")
-    player = subprocess.Popen(["mplayer",'song.mp3'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    player = subprocess.Popen(["omxplayer",'song.mp3'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     # player.stdin.write("q")
 
