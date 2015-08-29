@@ -1,10 +1,12 @@
 # performs a simple device inquiry, followed by a remote name request of each
 # discovered device
 
+
 import os
 import sys
 import struct
 import bluetooth._bluetooth as bluez
+from app import PifiApp
 
 def printpacket(pkt):
     for c in pkt:
@@ -100,6 +102,7 @@ def device_inquiry_with_with_rssi(sock):
                 rssi = struct.unpack("b", pkt[1+13*nrsp+i])[0]
                 results.append( ( addr, rssi ) )
                 print "[%s] RSSI: [%d]" % (addr, rssi)
+                addToArray(addr)
         elif event == bluez.EVT_INQUIRY_COMPLETE:
             done = True
         elif event == bluez.EVT_CMD_STATUS:
@@ -118,11 +121,19 @@ def device_inquiry_with_with_rssi(sock):
         else:
             print " "
 
+    #send off the data 
+
 
     # restore old filter
     sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, old_filter )
 
     return results
+
+def playSoundIfNecessary(arg):
+    for i in range(arg):
+        print "running"
+
+pifi = PifiApp()
 
 while (True):
     dev_id = 0
@@ -153,4 +164,4 @@ while (True):
             print "error while setting inquiry mode"
         print "result: %d" % result
 
-    device_inquiry_with_with_rssi(sock)
+    pifi.determineSong(device_inquiry_with_with_rssi(sock))
