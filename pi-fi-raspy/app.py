@@ -25,6 +25,11 @@ class PifiApp:
 
     request = requests.get(self.api + '/api/spotify/login', headers=headers)
 
+  def getUserByBluetooth(self, bluetooth):
+
+    headers = {'Authorization': 'Bearer '+self.accessToken}
+    request = requests.get(self.api + '/user/bluetooth/'+bluetooth, headers=headers)
+
 
   def getTrack(self, track):
 
@@ -33,6 +38,7 @@ class PifiApp:
     return request.json()['preview_url']
 
   def playTrack(self, trackUrl):  
+
     urllib.urlretrieve(trackUrl, "song.mp3")
     player = subprocess.Popen(["mplayer",'song.mp3'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 

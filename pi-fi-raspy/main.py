@@ -10,6 +10,7 @@ def main():
     app = PifiApp()
 
     app.login()
+    app.getUserByBluetooth('JSOINDFLISHDFLJSLIDF')
     trackUrl = app.getTrack('2daZovie6pc2ZK7StayD1K')
     app.playTrack(trackUrl)
 
