@@ -57,7 +57,11 @@ var UserController = {
 
     // Use the User model to find all clients
     OAuthUsersSchema.findOne({'_id':userId}).then(function(user) {
-      return responseUtil.handleSuccess(res, user);
+      if(user) {
+        return responseUtil.handleSuccess(res, user);
+      } else {
+        return responseUtil.handleNotFoundRequest(res, "User Not Found");
+      }
     }, function(error) {
       return responseUtil.handleInternalError(res, error);
     })
