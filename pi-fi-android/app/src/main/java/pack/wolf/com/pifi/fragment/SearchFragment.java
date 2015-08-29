@@ -7,27 +7,24 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 import pack.wolf.com.pifi.application.AppConstants;
 
-public class BaseFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     private static View rootView;
     private Context context;
 
-    public static BaseFragment newInstance() {
-        BaseFragment fragment = new BaseFragment();
+    public static SearchFragment newInstance() {
+        SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public BaseFragment() {
+    public SearchFragment() {
     }
 
     @Override
@@ -39,24 +36,19 @@ public class BaseFragment extends Fragment {
                 parent.removeView(rootView);
         }
         try {
-            rootView = inflater.inflate(R.layout.fragment_base, container, false);
+            rootView = inflater.inflate(R.layout.fragment_search, container, false);
         } catch (InflateException e) {
         }
 
         // get context
         context = inflater.getContext();
 
-        // get buttons
-        Button signupButton = (Button) rootView.findViewById(R.id.signup_button);
-        signupButton.setOnClickListener(new BaseActionBarActivity.FragmentOnClickListener(AppConstants.FRAGMENT_SIGNUP,SignUpFragment.newInstance()));
-        Button signinButton = (Button) rootView.findViewById(R.id.signin_button);
-        signinButton.setOnClickListener(new BaseActionBarActivity.FragmentOnClickListener(AppConstants.FRAGMENT_SIGNIN,SignInFragment.newInstance()));
+        // set title
+        BaseActionBarActivity.setTitle(AppConstants.FRAGMENT_SEARCH);
 
         return rootView;
 
     }
-
-
 
 
 }

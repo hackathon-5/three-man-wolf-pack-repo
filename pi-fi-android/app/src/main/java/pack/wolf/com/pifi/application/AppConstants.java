@@ -30,4 +30,14 @@ public class AppConstants {
     public static final String BASIC_SECRET = "fractals";
     public static final String SERVER_PATH = "http://127.0.0.1:9000/";
 
+    //fragment stuff
+    public static final String CLASS_PREFIX = "pack.wolf.com.pifi.fragment.";
+    public static final String FRAGMENT_BASE = "BaseFragment";
+    public static final String FRAGMENT_SIGNUP = "SignupFragment";
+    public static final String FRAGMENT_SIGNIN = "SigninFragment";
+    public static final String FRAGMENT_SEARCH = "SearchFragment";
+    public static final String FRAGMENT_TRACK = "TrackFragment";
+    public static final String FRAGMENT_SETTINGS = "SettingsFragment";
+
+
 }
