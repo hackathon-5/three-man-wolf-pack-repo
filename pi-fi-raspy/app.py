@@ -12,8 +12,8 @@ class PifiApp:
   # constructor
   def __init__(self):
     self.accessToken = 'bleh'
-    self.api = 'http://localhost:1337/api'
-    self.proximity =-60
+    self.api = 'http://52.20.116.83:1337/api'
+    self.proximity =-53
 
 
   def determineSong(self, addrRssiTuple):
@@ -28,7 +28,7 @@ class PifiApp:
           user = self.getUserByBluetooth(nearestDevice[0])
           track = self.getTrack(user.devices[0])
           self.playTrack(track)
-          
+
         except:
           print('Unable to find device for %s' % nearestDevice[0])
 
