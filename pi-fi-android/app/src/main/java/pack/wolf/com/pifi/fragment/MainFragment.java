@@ -42,13 +42,14 @@ public class MainFragment extends Fragment {
 
         // set title
         BaseActionBarActivity.setTitle(getString(R.string.home));
-        
+
         // get context
         context = inflater.getContext();
 
         // get button, bring to front
         Button startButton = (Button) rootView.findViewById(R.id.startButton);
         startButton.bringToFront();
+        startButton.setOnClickListener(new BaseActionBarActivity.FragmentOnClickListener(getString(R.string.search),SearchFragment.newInstance()));
 
         return rootView;
 
