@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import pack.wolf.com.pifi.R;
+import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 import pack.wolf.com.pifi.model.User;
 import pack.wolf.com.pifi.model.UserRequest;
 import pack.wolf.com.pifi.service.api.UserService;
@@ -47,6 +48,9 @@ public class SignUpFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_signup, container, false);
         } catch (InflateException e) {
         }
+
+        // set title
+        BaseActionBarActivity.setTitle(getString(R.string.signup));
 
         // get context
         context = inflater.getContext();

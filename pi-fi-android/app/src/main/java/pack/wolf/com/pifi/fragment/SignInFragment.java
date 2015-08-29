@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.android.volley.Response;
 
 import pack.wolf.com.pifi.R;
+import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 import pack.wolf.com.pifi.service.BluetoothService;
 import pack.wolf.com.pifi.service.api.AuthenticationService;
 import pack.wolf.com.pifi.service.impl.AuthenticationServiceImpl;
@@ -53,6 +54,9 @@ public class SignInFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_signin, container, false);
         } catch (InflateException e) {
         }
+
+        // set title
+        BaseActionBarActivity.setTitle(getString(R.string.signin));
 
         // get context
         context = inflater.getContext();

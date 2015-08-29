@@ -9,6 +9,7 @@ public class AppConstants {
 
     public static final String METHOD_TOKENS = "login/";
     public static final String METHOD_USER = "user/";
+    public static final String METHOD_TRACK = "spotify/getTrack/";
 
     public static final int REQUEST_TIMEOUT = 30000;
 

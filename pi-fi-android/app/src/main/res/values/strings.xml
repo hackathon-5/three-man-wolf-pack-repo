@@ -12,6 +12,7 @@
     <string name="password_confirm">Confirm Password</string>
     <string name="signing_up">Signing up...</string>
     <string name="signing_in">Signing in...</string>
+    <string name="track_info">Getting track information...</string>
     <string name="track">Track</string>
     <string name="search">Search</string>
     <string name="error_signup">Error signing up</string>

@@ -40,11 +40,11 @@ public class SearchFragment extends Fragment {
         } catch (InflateException e) {
         }
 
+        // set title
+        BaseActionBarActivity.setTitle(getString(R.string.search));
+
         // get context
         context = inflater.getContext();
-
-        // set title
-        BaseActionBarActivity.setTitle(AppConstants.FRAGMENT_SEARCH);
 
         return rootView;
 
