@@ -1,16 +1,17 @@
 package pack.wolf.com.pifi.activity;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +21,10 @@ import android.widget.TextView;
 
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.application.AppConstants;
-import pack.wolf.com.pifi.fragment.BaseFragment;
 import pack.wolf.com.pifi.fragment.SettingsFragment;
 import pack.wolf.com.pifi.service.BluetoothService;
 
-public class BaseActionBarActivity extends AppCompatActivity {
+public class BaseActionBarActivity2 extends ActionBarActivity {
 
     private Context context;
     public static FragmentManager fragmentManager;
@@ -32,6 +32,9 @@ public class BaseActionBarActivity extends AppCompatActivity {
     public static BluetoothAdapter bluetoothAdapter;
     private Toolbar mToolbar;
     public static TextView mTitle;
+    private MenuItem searchItem;
+    private Menu menu;
+    public boolean enableSearchBar = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,26 +51,6 @@ public class BaseActionBarActivity extends AppCompatActivity {
         // get context
         this.context = this;
 
-        // get fragment manager
-        fragmentManager = getSupportFragmentManager();
-
-        // set up action bar
-        ColorDrawable newColor = new ColorDrawable(getResources().getColor(R.color.black));
-        newColor.setAlpha(128);
-        setSupportActionBar(mToolbar);
-        actionBar = getSupportActionBar();
-        actionBar.setStackedBackgroundDrawable(newColor);
-        actionBar.setBackgroundDrawable(newColor);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setElevation(0);
-
-        // set home
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, BaseFragment.newInstance())
-                .addToBackStack(AppConstants.FRAGMENT_BASE)
-                .commit();
-
         // Initializes Bluetooth adapter.
         final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bluetoothAdapter = bluetoothManager.getAdapter();
@@ -82,6 +65,32 @@ public class BaseActionBarActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
+
+
+        this.menu = menu;
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+            searchItem = this.menu.findItem(R.id.action_search);
+
+            // bind to search.. if nec
+            if (!enableSearchBar) {
+                searchItem.setEnabled(false);
+                searchItem.setVisible(false);
+            }
+
+            // Associate searchable configuration with the SearchView
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView searchView = (SearchView) searchItem.getActionView();
+            searchView.setFocusable(true);
+
+            if (enableSearchBar) {
+                searchItem.expandActionView();
+                searchView.clearFocus();
+                searchView.requestFocusFromTouch();
+                searchView.requestFocus();
+            }
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
 
@@ -102,7 +111,6 @@ public class BaseActionBarActivity extends AppCompatActivity {
                 break;
             case R.id.action_search:
                 startActivity(new Intent(context, UserSearchActivity.class));
-
                 break;
             case R.id.action_logout:
                 break;
@@ -120,6 +128,9 @@ public class BaseActionBarActivity extends AppCompatActivity {
         actionBar.show();
     }
 
+    public void enableSearchBar(Boolean enable) {
+        enableSearchBar = enable;
+    }
     public static void hideTitleBar() {
         actionBar.hide();
     }

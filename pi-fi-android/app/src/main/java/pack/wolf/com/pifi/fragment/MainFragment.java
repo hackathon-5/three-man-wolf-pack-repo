@@ -2,6 +2,7 @@ package pack.wolf.com.pifi.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import pack.wolf.com.pifi.R;
 import pack.wolf.com.pifi.activity.BaseActionBarActivity;
+import pack.wolf.com.pifi.activity.UserSearchActivity;
 import pack.wolf.com.pifi.model.Track;
 import pack.wolf.com.pifi.model.User;
 import pack.wolf.com.pifi.service.TrackServiceFactory;
@@ -93,7 +95,14 @@ public class MainFragment extends Fragment {
         // get button, bring to front
         Button startButton = (Button) rootView.findViewById(R.id.startButton);
         startButton.bringToFront();
-        startButton.setOnClickListener(new BaseActionBarActivity.FragmentOnClickListener(getString(R.string.search),SearchFragment.newInstance()));
+        startButton.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View v) {
+                                               Intent intent = new Intent(context, UserSearchActivity.class);
+                                               startActivity(intent);
+                                           }
+                                       }
+        );
 
 
         return rootView;
