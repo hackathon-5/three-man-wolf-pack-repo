@@ -2,7 +2,6 @@ package pack.wolf.com.pifi.service.impl;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,7 +12,6 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 
 import pack.wolf.com.pifi.R;
-import pack.wolf.com.pifi.activity.BaseActionBarActivity;
 import pack.wolf.com.pifi.application.AppConstants;
 import pack.wolf.com.pifi.model.User;
 import pack.wolf.com.pifi.model.UserRequest;
@@ -30,7 +28,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void getCurrentUser(final Context context, final Response.Listener<User> response, final Dialog dialog) {
-//stub
+//
+//        String url = AppConstants.SERVER_PATH + AppConstants.METHOD_USER;
+//        Gson gson = new Gson();
+//        String jsonBody = gson.toJson(user);
+//        GsonRequest<User> request = new GsonRequest<>(AppConstants.JSON_CONTENT_TYPE, GsonRequest.Method.POST, url, User.class, null, jsonBody, new Response.Listener<User>() {
+//            @Override
+//            public void onResponse(User userResp) {
+//                Log.d(AppConstants.LOG_TAG, "Create user call success..");
+//                dialog.dismiss();
+//                response.onResponse(userResp);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                dialog.dismiss();
+//                Log.e(AppConstants.LOG_TAG, "Error occurred during sign up call: " + error.getMessage());
+//                Toast.makeText(context, R.string.error_signup, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        VolleyManager.getInstance().getRequestQueue().add(request);    }
     }
 
     @Override
