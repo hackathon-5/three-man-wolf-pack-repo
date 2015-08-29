@@ -58,6 +58,21 @@ OAuthUsersSchema.static('saveTrack', function(id, track) {
   return dfd.promise;
 });
 
+OAuthUsersSchema.static('saveBluetooth', function(id, bluetooth) {
+  var dfd = Q.defer();
+  var model = this;
+  model.update({_id:id},
+    { bluetooth: bluetooth}, null,
+    function(err, user){
+      if (err) {
+        dfd.reject(err);
+      } else {
+        dfd.resolve(user);
+      }
+    });
+  return dfd.promise;
+});
+
 OAuthUsersSchema.static('updateUser', function(currentUser) {
   var dfd = Q.defer();
   var model = this;

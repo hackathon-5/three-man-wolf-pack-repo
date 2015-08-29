@@ -152,6 +152,24 @@ var UserController = {
     }, function(error) {
       return responseUtil.handleInternalError(res, err);
     })
+  },
+
+  saveBluetooth: function(req,res) {
+
+    if (!req.username) {
+      return res.sendUnauthenticated();
+    }
+
+    //must be valid mongo id format or shit blows up
+    if (!objectid.isValid(req.body.id)) {
+      return responseUtil.handleBadRequest(res, 'Invalid userId format.');
+    }
+
+    OAuthUsersSchema.saveBluetooth(req.body.id, req.body.bluetooth).then(function(user) {
+      return responseUtil.handleSuccess(res, user);
+    }, function(error) {
+      return responseUtil.handleInternalError(res, err);
+    })
   }
 };
 
