@@ -14,8 +14,12 @@ var api = restify.createServer({
   formatters: {
     'application/json': function(req, res, body) {
       return JSON.stringify(body);
+    },
+    'application/x-www-form-urlencoded': function(req, res, body) {
+      console.log(body);
     }
-  }
+  },
+  acceptable: ["application/json", "application/x-www-form-urlencoded"]
 });
 
 api.pre(restify.pre.sanitizePath());

@@ -13,7 +13,9 @@ var OAuthUsersSchema = new Schema({
   password_reset_token: { type: String, unique: true },
   reset_token_expires: Date,
   firstname: String,
-  lastname: String
+  lastname: String,
+  bluetooth: String,
+  tracks: [Schema.Types.Mixed]
 });
 
 function hashPassword(password) {
@@ -41,6 +43,21 @@ OAuthUsersSchema.static('getUser', function(email) {
   return dfd.promise;
 });
 
+OAuthUsersSchema.static('saveTrack', function(id, track) {
+  var dfd = Q.defer();
+  var model = this;
+  model.update({_id:id},
+    {$push: { 'tracks' : track }}, {upsert:true},
+    function(err, user){
+      if (err) {
+        dfd.reject(err);
+      } else {
+        dfd.resolve(user);
+      }
+    });
+  return dfd.promise;
+});
+
 OAuthUsersSchema.static('updateUser', function(currentUser) {
   var dfd = Q.defer();
   var model = this;
@@ -48,7 +65,8 @@ OAuthUsersSchema.static('updateUser', function(currentUser) {
     {$set: { firstname: currentUser.firstname,
       lastname: currentUser.lastname,
       hashed_password: hashPassword(currentUser.password),
-      email: currentUser.email}}, null,
+      email: currentUser.email,
+      bluetooth: currentUser.bluetooth}}, null,
     function(err, user){
       if (err) {
         dfd.reject(err);

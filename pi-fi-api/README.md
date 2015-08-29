@@ -1,35 +1,23 @@
-#Restify Seed
-A starting point for building a scalable & maintainable [Restify](http://mcavage.me/node-restify/) REST API.
+#pi-fi
+[Restify](http://mcavage.me/node-restify/) REST API.
 
-![badge](https://codeship.com/projects/063d1750-2391-0133-4c96-3eb60f8459a5/status?branch=master)
 
 ##About
-Implementing a sensible abstraction, Restify Seed allows developers to stand up a solid Restify project in minutes. The architectural principles and dependencies behind Restify Seed encourage a proper separation of concerns, usage of modern design patterns, a testable codebase, and more.
+API for the pi-fi application
 
 ##Guide
 
 ####_Installation_
-```shell
-# as root...
-$ mkdir my-cool-project \
-&& cd my-cool-project/ \
-&& git clone https://github.com/MatthewVita/Restify-Seed.git \
-&& rm -rf Restify-Seed/.git \
-&& mv -f Restify-Seed/** ./ \
-&& rm -rf Restify-Seed \
-&& npm i \
-&& npm i -g mocha \
-&& clear \
+&& npm install
 && node app.js --development
-[INFO] 2015-06-22T20:00:30-04:00 - Calendar App is running at http://0.0.0.0:1337 - app
+
 ```
 
 ...then open up browser to [localhost:1337/api/calendar/day](localhost:1337/api/calendar/day)
 
 ####_Structure_
-_(TL;DR: just follow the provided "Calendar" application sample files in the project for an idea of how this seed project structures the code.)_
 
-Restify Seed adheres to the Model-View-Controller pattern (where "Views" are simply the JSON output to be consumed by a client). Below are some example snippets of how to structure your code:
+pi-fi adheres to the Model-View-Controller pattern (where "Views" are simply the JSON output to be consumed by a client). Below are some example snippets of how to structure your code:
 
 - First, define all configuration values in ```config.js``` (some defaults are provided):
 
@@ -43,94 +31,72 @@ exports.api = {
 exports.environment = {
   name: 'development',
   port: 1337,
-  salt: '', //generate one @ random.org
   //...and so on
 ```
 
 - Second, add all necessary endpoints by creating a routes file in ```routes/```:
 
 ```javascript
-//see routes/calendarRoutes.js for full example
-function CalendarRoutes(api) {
-  api.get('/api/calendar/day', rateLimit, CalendarController.getCalendarDay);
-
-  api.post('/api/calendar/appointment', rateLimit, CalendarController.postCalendarAppointment);
+//see routes/userRoutes.js for full example
+function UserRoutes(api) {
+  api.post('/api/user', userController.createUser);
+  api.get('/api/user/:userId', userController.getUserById);
   //...and so on
 ```
 
 - Third, add a controller in ```controllers/```:
 
 ```javascript
-//see controllers/calendarController.js for full example
-var CalendarController = {
+//see controllers/userController.js for full example
+var UserController = {
 
-  getCalendarDay: function(req, res) {
-    var calModel = new CalendarModel();
+  createUser: function(req, res) {
 
-    calModel.selectCalendarDay()
-      .then(function(day) {
-        res.send(200, day);
-      })
-      .catch(function(err) {
-        res.send(500, {
-          error: err
-        });
-      });
-  },
+    // Create a new instance of the User model
+    var user = new OAuthUsersSchema();
 
-  postCalendarAppointment: function(req, res) {
-    var calModel = new CalendarModel();
+    // Set the client properties that came from the POST data
+    var isAdmin = req.body.admin;
+    user.admin = isAdmin == null || isAdmin == '' ? false : isAdmin;
+    user.firstname = req.body.firstName;
     //...and so on
 ```
 
 - Fourth, add a model in ```models/``` (note that one can put these in "services" as well, making models anemic data models):
 
 ```javascript
-//see models/calendarModel.js for full example
-function CalendarModel() {
+//see models/userModel.js for full example
+var OAuthUsersSchema = new Schema({
+  email: { type: String, unique: true, required: true },
+  admin: { type: Boolean, required: true},
+  hashed_password: { type: String, required: true },
+  password_reset_token: { type: String, unique: true },
+  reset_token_expires: Date,
+  firstname: String,
+  lastname: String,
+  bluetooth: String,
+  tracks: [Schema.Types.Mixed]
+});
 
-  this.selectCalendarDay = function() {
-    var dfd = Q.defer();
+function hashPassword(password) {
+  var salt = bcrypt.genSaltSync(10);
+  return bcrypt.hashSync(password, salt);
+}
 
-    try {
-      dfd.resolve({
-        day: moment().format('dddd')
-      });
-    } catch (err) {
-      dfd.reject('Chronos took the day off.');
-    }
+OAuthUsersSchema.static('register', function(fields, cb) {
+  var user;
 
-    return dfd.promise;
-  };
+  fields.hashed_password = hashPassword(fields.password);
+  delete fields.password;
 
-  this.validateCalendarAppointment = function(dateTime, description, attendees) {
-    if (!dateTime || !moment(dateTime, ['YYYY-MM-DD hh:mm'], true).isValid()) {
-      return {
-        error: 'Provide valid appointment date & time.'
-      };
+  user = new OAuthUsersModel(fields);
+  return user.save();
+});
   //...and so on
 ```
 
 ####_Testing_
-See ```testing/calendarTests.js``` for example tests. To run the test suite, issue the following:
 
-```shell
-$ cd testing
-$ mocha *.js
-  Calendar Tests
-    selectCalendarDay function
-      ✓ returns current day of the week
-    validateCalendarAppointment function
-      ✓ errors because datetime is invalid
-      ✓ errors because date is in the past
-      ✓ errors because description must be specified
-      ✓ errors because attendees must be specified
-      ✓ validates
-    insertCalendarAppointment function
-      ✓ adds a new appointment
-      ✓ errors because validation wasn't passed
-
-  8 passing (20ms)
 ```
 
 - [Proxyquire](https://github.com/thlorenz/proxyquire) - Default dependency interceptor library.
